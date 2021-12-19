@@ -1,8 +1,6 @@
-// import fetch from 'isomorphic-unfetch';
-
 const host = process.env.HOST || "";
 
-export async function getAll() {
+export async function getAllNotes() {
     const res = await fetch(`${host}/api/notes`);
     const { data } = await res.json();
     return data;
