@@ -10,8 +10,8 @@ export default apiHandler({
         const notes = await Note.find({});
         setSuccessfulRequest(res, notes);
     },
-    post: async ({res}) => {
-        const note = await Note.create();
+    post: async ({res, body}) => {
+        const note = await Note.create(body);
         setSuccessfulRequest(res, note);
     }
 })

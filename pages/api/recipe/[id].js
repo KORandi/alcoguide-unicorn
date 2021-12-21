@@ -23,7 +23,7 @@ export default apiHandler({
         }
         return setSuccessfulRequest(res, note);
     },
-    delete: async ({id}) => {
+    delete: async ({id, res}) => {
         const deletedNote = await Note.deleteOne({ _id: id });
         if (!deletedNote) {
             return setFailedRequest(res);

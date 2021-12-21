@@ -1,8 +1,7 @@
-import fetch from 'isomorphic-unfetch';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Confirm, Button, Loader } from 'semantic-ui-react';
-import { getNote } from '../../../api/recipe';
+import { deleteRecipe, getRecipe } from '../../../api/recipe';
 
 const Note = ({ note }) => {
     const [confirm, setConfirm] = useState(false);
@@ -22,7 +21,7 @@ const Note = ({ note }) => {
     const deleteNote = async () => {
         const noteId = router.query.id;
         try {
-            deleteNote(noteId);
+            await deleteRecipe(noteId);
             router.push("/");
         } catch (error) {
             console.log(error)
@@ -55,7 +54,7 @@ const Note = ({ note }) => {
 }
 
 Note.getInitialProps = async ({ query: { id } }) => {
-    const data = await getNote(id);
+    const data = await getRecipe(id);
     return { note: data }
 }
 

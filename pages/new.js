@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import fetch from 'isomorphic-unfetch';
 import { Button, Form, Loader } from 'semantic-ui-react';
 import { useRouter } from 'next/router';
+import { addRecipe } from '../api/recipe';
 
 const NewNote = () => {
     const [form, setForm] = useState({ title: '', description: '' });
@@ -23,14 +24,7 @@ const NewNote = () => {
 
     const createNote = async () => {
         try {
-            const res = await fetch('http://localhost:3000/api/notes', {
-                method: 'POST',
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(form)
-            })
+            await addRecipe(form);
             router.push("/");
         } catch (error) {
             console.log(error);
