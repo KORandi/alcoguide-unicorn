@@ -1,24 +1,20 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { Container, Input, Menu } from "semantic-ui-react";
+import Link from 'next/link';
 
-const Navbar = () => {
-    const router = useRouter();
-    const handleOnClick = (route) => {
-        router.push(route);
-    }
-    return (
-        <Container>
-            <Menu secondary>
-                <Menu.Item name="search" onClick={() => {handleOnClick("search")}} />
-                <Menu.Item name="recipes" onClick={() => {handleOnClick("recipe")}} />
-                <Menu.Item name="ingredients" onClick={() => {handleOnClick("ingredient")}} />
-                <Menu.Menu position="right">
-                    <Menu.Item name="login" />
-                </Menu.Menu>
-            </Menu>
-        </Container>
-    );
-};
+function Navbar() {
+  return (
+    <nav className="navbar navbar-dark bg-dark">
+      <div className="container-fluid">
+        <Link href="/">
+          <a className="navbar-brand">AlcoGuide</a>
+        </Link>
+        <div className="d-flex align-items-center">
+          <button type="button" className="btn btn-primary me-3">
+            Sign in
+          </button>
+        </div>
+      </div>
+    </nav>
+  );
+}
 
 export default Navbar;
