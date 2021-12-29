@@ -1,11 +1,11 @@
 import Head from 'next/head';
-import Navbar from '../components/Navbar';
+import Navbar from '../Navbar';
 
 function Layout({ children }) {
   return (
     <>
       <Head>
-        <title>Note App</title>
+        <title>Unicorn student project</title>
       </Head>
       <Navbar />
       {children}

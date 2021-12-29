@@ -1,8 +1,7 @@
-// import App from 'next/app'
 import 'semantic-ui-css/semantic.min.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import '../css/style.css';
-import Layout from '../layout/index';
+import Layout from '../components/Layout';
 
 function MyApp({ Component, pageProps }) {
   return (
