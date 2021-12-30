@@ -1,11 +1,18 @@
 import { Controller, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { useState } from 'react/cjs/react.development';
+import { useEffect } from 'react';
+import classNames from 'classnames';
 import SearchInput from './SearchInput';
 import fruits from '../../../assets/fruits.json';
 
 function SearchForm() {
   const { control, handleSubmit } = useForm();
+  const [headline, setHeadline] = useState('');
+  const [showForm, setShowForm] = useState(false);
   const router = useRouter();
+  const quote =
+    'Our goal is to help users set up the best alcoholic drinks from the in house ingrediences';
 
   const onSubmit = ({ search = [] }) => {
     if (search.length === 0) {
@@ -18,23 +25,53 @@ function SearchForm() {
     );
   };
 
+  const typeWriter = () => {
+    if (headline.length < quote.length) {
+      setTimeout(() => {
+        setHeadline(headline + quote.charAt(headline.length));
+      }, 25);
+    } else {
+      setTimeout(() => {
+        setShowForm(true);
+      }, 1000);
+    }
+  };
+
+  useEffect(() => {
+    typeWriter();
+  }, [headline]);
+
   return (
-    <div className="d-flex align-items-center justify-content-center" style={{ height: '80vh' }}>
-      <div>
-        <div>
-          <div>
-            <figure className="text-center">
-              <blockquote className="blockquote">
-                <p>A well-known quote, contained in a blockquote element.</p>
-              </blockquote>
-              <figcaption className="blockquote-footer">
-                Someone famous in <cite title="Source Title">Source Title</cite>
-              </figcaption>
-            </figure>
-          </div>
+    <div className="d-flex h-100 align-items-center justify-content-center">
+      <div
+        className={classNames({
+          'w-100': !showForm,
+        })}
+      >
+        <div
+          className={classNames('w-100', {
+            'd-none': showForm,
+            'animate__animated animate__fadeOut': showForm,
+          })}
+        >
+          <figure className="text-start text-light fw-bold d-block w-100">
+            <blockquote className="blockquote">
+              <p style={{ minHeight: '50px' }}>
+                <i>{headline}</i>
+              </p>
+            </blockquote>
+            <figcaption className="blockquote-footer text-light fw-bold">Our team</figcaption>
+          </figure>
         </div>
-        <h2 className="text-center">What ingredients do you have?</h2>
-        <form onSubmit={handleSubmit(onSubmit)} className="search d-block w-100" autoComplete="off">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className={classNames('search d-block w-100', {
+            'd-none': !showForm,
+            'animate__animated animate__fadeIn': showForm,
+          })}
+          autoComplete="off"
+        >
+          <h2 className="text-center text-white">What ingredients do you have?</h2>
           <div className="form-group">
             <Controller
               control={control}
@@ -53,6 +90,22 @@ function SearchForm() {
           </div>
         </form>
       </div>
+      <style jsx global>
+        {`
+          body {
+            /* The image used */
+            background-image: url('/img/bg.jpg');
+
+            /* Full height */
+            height: 100%;
+
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+          }
+        `}
+      </style>
     </div>
   );
 }

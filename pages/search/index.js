@@ -6,9 +6,9 @@ import ingredientPropType from '../../propTypes/ingredientPropType';
 
 function SearchPage({ ingredients }) {
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-12">
+    <div className="container" style={{ height: 'calc(100% - 50px)' }}>
+      <div className="row h-100">
+        <div className="col-12 h-100">
           {ingredients.length === 0 && <SearchForm />}
           {ingredients.length > 0 && <SearchResult ingredients={ingredients} />}
         </div>
