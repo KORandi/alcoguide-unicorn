@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react/cjs/react.development';
 import { useEffect } from 'react';
 import classNames from 'classnames';
+import Head from 'next/head';
 import SearchInput from './SearchInput';
 import fruits from '../../../assets/fruits.json';
 
@@ -12,7 +13,7 @@ function SearchForm() {
   const [showForm, setShowForm] = useState(false);
   const router = useRouter();
   const quote =
-    'Our goal is to help users set up the best alcoholic drinks from the in house ingrediences';
+    'Our goal is to help users set up the best alcoholic drinks from the\xa0in\xa0house ingrediences';
 
   const onSubmit = ({ search = [] }) => {
     if (search.length === 0) {
@@ -29,11 +30,11 @@ function SearchForm() {
     if (headline.length < quote.length) {
       setTimeout(() => {
         setHeadline(headline + quote.charAt(headline.length));
-      }, 25);
+      }, 20);
     } else {
       setTimeout(() => {
         setShowForm(true);
-      }, 1000);
+      }, 1500);
     }
   };
 
@@ -56,9 +57,9 @@ function SearchForm() {
         >
           <figure className="text-start text-light fw-bold d-block w-100">
             <blockquote className="blockquote">
-              <p style={{ minHeight: '50px' }}>
+              <h3 style={{ minHeight: '50px', maxWidth: '50%' }}>
                 <i>{headline}</i>
-              </p>
+              </h3>
             </blockquote>
             <figcaption className="blockquote-footer text-light fw-bold">Our team</figcaption>
           </figure>
@@ -93,19 +94,18 @@ function SearchForm() {
       <style jsx global>
         {`
           body {
-            /* The image used */
-            background-image: url('/img/bg.jpg');
-
-            /* Full height */
+            background-image: url(${showForm ? '/img/bg-blured.jpg' : '/img/bg.jpg'});
             height: 100%;
-
-            /* Center and scale the image nicely */
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
           }
         `}
       </style>
+      <Head>
+        <link rel="preload" as="image" href="/img/bg.jpg" />
+        <link rel="preload" as="image" href="/img/bg-blured.jpg" />
+      </Head>
     </div>
   );
 }
