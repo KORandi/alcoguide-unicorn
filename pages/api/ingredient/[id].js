@@ -1,5 +1,4 @@
 import dbConnect from '../../../utils/dbConnect';
-import Note from '../../../models/Note';
 import apiHandler from '../../../utils/apiHandler';
 import { setFailedRequest, setSuccessfulRequest } from '../../../utils/apiUtils';
 

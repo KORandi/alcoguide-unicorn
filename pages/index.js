@@ -1,3 +1,3 @@
-import Search from "./search/index"
+import Homepage from './homepage/index';
 
-export default Search
+export default Homepage;

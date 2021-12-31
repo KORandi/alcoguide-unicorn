@@ -27,6 +27,10 @@
     "operator-linebreak": "off",
     "comma-dangle": "off",
     "implicit-arrow-linebreak": "off",
-    "function-paren-newline": "off"
+    "function-paren-newline": "off",
+    "no-underscore-dangle": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "new-cap": "off",
+    "object-curly-newline": "off"
   }
 }

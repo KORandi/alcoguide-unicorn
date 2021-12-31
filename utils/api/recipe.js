@@ -31,3 +31,11 @@ export async function addRecipe(recipe) {
   });
   return res;
 }
+
+export async function addRecipeFormData(recipe) {
+  const res = await fetch(`${host}/api/recipe`, {
+    method: 'POST',
+    body: recipe,
+  });
+  return res;
+}

@@ -1,19 +1,12 @@
 import { Controller, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import { useState } from 'react/cjs/react.development';
-import { useEffect } from 'react';
-import classNames from 'classnames';
-import Head from 'next/head';
-import SearchInput from './SearchInput';
-import fruits from '../../../assets/fruits.json';
 
-function SearchForm() {
-  const { control, handleSubmit } = useForm();
-  const [headline, setHeadline] = useState('');
-  const [showForm, setShowForm] = useState(false);
+import propTypes from 'prop-types';
+import SearchInput from './SearchInput';
+
+function SearchForm({ ingredients }) {
   const router = useRouter();
-  const quote =
-    'Our goal is to help users set up the best alcoholic drinks from the\xa0in\xa0house ingrediences';
+  const { control, handleSubmit } = useForm();
 
   const onSubmit = ({ search = [] }) => {
     if (search.length === 0) {
@@ -21,93 +14,40 @@ function SearchForm() {
     }
     router.push(
       `/search?${new URLSearchParams({
-        ingredients: Object.values(search).map((ingredient) => ingredient.id),
+        ingredients: Object.values(search).map((ingredient) => ingredient._id),
       }).toString()}`
     );
   };
 
-  const typeWriter = () => {
-    if (headline.length < quote.length) {
-      setTimeout(() => {
-        setHeadline(headline + quote.charAt(headline.length));
-      }, 20);
-    } else {
-      setTimeout(() => {
-        setShowForm(true);
-      }, 1500);
-    }
-  };
-
-  useEffect(() => {
-    typeWriter();
-  }, [headline]);
-
   return (
-    <div className="d-flex h-100 align-items-center justify-content-center">
-      <div
-        className={classNames({
-          'w-100': !showForm,
-        })}
-      >
-        <div
-          className={classNames('w-100', {
-            'd-none': showForm,
-            'animate__animated animate__fadeOut': showForm,
-          })}
-        >
-          <figure className="text-start text-light fw-bold d-block w-100">
-            <blockquote className="blockquote">
-              <h3 style={{ minHeight: '50px', maxWidth: '50%' }}>
-                <i>{headline}</i>
-              </h3>
-            </blockquote>
-            <figcaption className="blockquote-footer text-light fw-bold">Our team</figcaption>
-          </figure>
-        </div>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className={classNames('search d-block w-100', {
-            'd-none': !showForm,
-            'animate__animated animate__fadeIn': showForm,
-          })}
-          autoComplete="off"
-        >
-          <h2 className="text-center text-white">What ingredients do you have?</h2>
-          <div className="form-group">
-            <Controller
-              control={control}
-              name="search"
-              defaultValue={[]}
-              render={({ field, fieldState }) => (
-                <SearchInput data={fruits} {...field} {...fieldState} />
-              )}
-            />
-          </div>
-
-          <div className="d-flex mt-3 justify-content-end">
-            <button className="btn btn-primary px-3 mx-1 d-block w-100" type="submit">
-              Search
-            </button>
-          </div>
-        </form>
+    <form onSubmit={handleSubmit(onSubmit)} className="search d-block w-100" autoComplete="off">
+      <div className="form-group">
+        <Controller
+          control={control}
+          name="search"
+          defaultValue={[]}
+          render={({ field, fieldState }) => (
+            <SearchInput data={ingredients} {...field} {...fieldState} />
+          )}
+        />
       </div>
-      <style jsx global>
-        {`
-          body {
-            background-image: url(${showForm ? '/img/bg-blured.jpg' : '/img/bg.jpg'});
-            height: 100%;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-          }
-        `}
-      </style>
-      <Head>
-        <link rel="preload" as="image" href="/img/bg.jpg" />
-        <link rel="preload" as="image" href="/img/bg-blured.jpg" />
-      </Head>
-    </div>
+
+      <div className="d-flex mt-3 justify-content-end">
+        <button className="btn btn-primary px-3 mx-1 d-block w-100" type="submit">
+          Search
+        </button>
+      </div>
+    </form>
   );
 }
+
+SearchForm.propTypes = {
+  ingredients: propTypes.arrayOf(
+    propTypes.shape({
+      _id: propTypes.string.isRequired,
+      name: propTypes.string.isRequired,
+    })
+  ).isRequired,
+};
 
 export default SearchForm;
