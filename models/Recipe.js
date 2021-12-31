@@ -19,7 +19,7 @@ const RecipeSchema = new mongoose.Schema({
     required: true,
     maxlength: [200, 'Description cannot be more than 200 characters'],
   },
-  ingredients: [String],
+  ingredients: [IngredientSchema],
   rates: [Number],
   author: {
     type: String,

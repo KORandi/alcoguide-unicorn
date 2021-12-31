@@ -3,12 +3,13 @@ import classNames from 'classnames';
 import Head from 'next/head';
 import { Divider } from 'semantic-ui-react';
 import Link from 'next/link';
-import propTypes from 'prop-types';
 import SearchForm from '../../Forms/Search';
 import HomepageHeadline from '../../Headlines/HomepageHeadline';
+import { useAppContext } from '../../context/state';
 
-function HomePage({ ingredients }) {
+function HomePage() {
   const [showForm, setShowForm] = useState(false);
+  const { ingredients } = useAppContext();
   const quote =
     'Our goal is to help users set up the best alcoholic drinks from current available ingrediences';
 
@@ -63,14 +64,5 @@ function HomePage({ ingredients }) {
     </div>
   );
 }
-
-HomePage.propTypes = {
-  ingredients: propTypes.arrayOf(
-    propTypes.shape({
-      _id: propTypes.string.isRequired,
-      name: propTypes.string.isRequired,
-    })
-  ).isRequired,
-};
 
 export default HomePage;

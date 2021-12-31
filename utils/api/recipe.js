@@ -8,6 +8,12 @@ export async function getAllRecipes() {
   return data;
 }
 
+export async function searchRecipe(query) {
+  const res = await fetch(`${host}/api/recipe?${new URLSearchParams(query).toString()}`);
+  const { data } = await res.json();
+  return data;
+}
+
 export async function getRecipe(id) {
   const res = await fetch(`${host}/api/recipe/${id}`);
   const { data } = await res.json();

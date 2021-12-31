@@ -6,7 +6,7 @@ const recipePropType = propTypes.shape({
   title: propTypes.string.isRequired,
   description: propTypes.string.isRequired,
   shortDescription: propTypes.string.isRequired,
-  ingredients: propTypes.arrayOf(ingredientPropType).isRequired,
+  ingredients: propTypes.arrayOf(propTypes.string).isRequired,
   image: propTypes.string.isRequired,
 });
 

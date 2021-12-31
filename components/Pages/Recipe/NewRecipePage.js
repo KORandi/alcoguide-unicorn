@@ -22,12 +22,15 @@ function NewRecipePage() {
     formData.append('image', image[0]);
     formData.append('title', title);
     formData.append('shortDescription', shortDescription);
-    formData.append('ingredients', JSON.stringify(['apple']));
+    formData.append(
+      'ingredients',
+      JSON.stringify([{ _id: '61ce5d5b8e7470db675128fe', name: 'apple' }])
+    );
     formData.append('rates', JSON.stringify([1, 2, 3, 4, 5]));
     formData.append('description', description);
     formData.append('author', author);
     await addRecipeFormData(formData);
-    // router.push('/search');
+    router.push('/search');
   };
 
   return (

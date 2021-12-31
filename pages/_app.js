@@ -3,12 +3,15 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'animate.css';
 import '../css/style.css';
 import Layout from '../components/Layout';
+import { AppContextWrapper } from '../components/context/state';
 
 function MyApp({ Component, pageProps }) {
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <AppContextWrapper>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </AppContextWrapper>
   );
 }
 
