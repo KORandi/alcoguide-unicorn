@@ -5,7 +5,7 @@ function Layout({ children }) {
   return (
     <>
       <Head>
-        <title>Unicorn student project</title>
+        <title>AlcoGuide</title>
       </Head>
       <Navbar />
       {children}
