@@ -87,6 +87,7 @@ html {
 
 .hamburger-inner,
 .hamburger-inner:after,
-.hamburger-inner:before {
-  background-color: #fff;
+.hamburger-inner:before,
+.hamburger--squeeze.is-active .hamburger-inner:before {
+  background-color: #fff !important;
 }

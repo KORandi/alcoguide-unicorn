@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import Link from 'next/link';
 import { useState } from 'react/cjs/react.development';
 import { Icon, Menu, Sidebar } from 'semantic-ui-react';
@@ -27,7 +28,13 @@ function Navbar() {
           <Link href="/">
             <a className="navbar-brand">AlcoGuide</a>
           </Link>
-          <button onClick={() => setVisible(true)} className="hamburger" type="button">
+          <button
+            onClick={() => setVisible(true)}
+            className={classNames('hamburger', {
+              'hamburger--squeeze is-active': visible,
+            })}
+            type="button"
+          >
             <span className="hamburger-box">
               <span className="hamburger-inner" />
             </span>
