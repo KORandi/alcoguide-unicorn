@@ -14,11 +14,18 @@ function Navbar() {
           <Link href="/">
             <a className="navbar-brand">AlcoGuide</a>
           </Link>
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0 d-flex flex-row">
+            <li className="nav-item px-2">
               <Link href="/">
                 <a className="nav-link">
                   Home <Icon name="home" />
+                </a>
+              </Link>
+            </li>
+            <li className="nav-item px-2">
+              <Link href="/search">
+                <a className="nav-link">
+                  Cocktails <Icon name="cocktail" />
                 </a>
               </Link>
             </li>
@@ -61,8 +68,13 @@ function Navbar() {
           <div className="p-3">
             <Link href="/">
               <Menu.Item as="a">
-                <Icon name="home" />
                 Home
+                <Icon name="home" />
+              </Menu.Item>
+            </Link>
+            <Link href="/search">
+              <Menu.Item as="a">
+                Cocktails <Icon name="cocktail" />
               </Menu.Item>
             </Link>
             <Menu.Item className="d-flex justify-content-end" as="a">
