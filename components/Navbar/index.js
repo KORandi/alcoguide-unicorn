@@ -14,6 +14,15 @@ function Navbar() {
           <Link href="/">
             <a className="navbar-brand">AlcoGuide</a>
           </Link>
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            <li className="nav-item">
+              <Link href="/">
+                <a className="nav-link">
+                  Home <Icon name="home" />
+                </a>
+              </Link>
+            </li>
+          </ul>
           <div className="d-flex align-items-center">
             <button type="button" className="btn btn-primary me-3">
               Sign in
