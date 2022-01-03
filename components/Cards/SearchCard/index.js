@@ -8,7 +8,7 @@ function SearchCard({ ingredients, recipe: { title, image, shortDescription, _id
 
   return (
     <div className="card">
-      {image && <img src={image} style={{ maxHeight: '180px' }} alt={title} />}
+      {image && <img src={image} alt={title} />}
       {!image && (
         <svg
           className="bd-placeholder-img card-img-top"

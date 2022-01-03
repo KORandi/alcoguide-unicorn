@@ -30,7 +30,7 @@ export default apiHandler({
       try {
         imageLink = await uploadFile(files, 'image');
       } catch (error) {
-        setFailedRequest(res);
+        setFailedRequest(res, error);
         return;
       }
       fields.image = imageLink;
@@ -47,7 +47,7 @@ export default apiHandler({
     try {
       newRecipe = await RecipeSchema.create(fields);
     } catch (error) {
-      setFailedRequest(res);
+      setFailedRequest(res, error);
       return;
     }
     setSuccessfulRequest(res, newRecipe);

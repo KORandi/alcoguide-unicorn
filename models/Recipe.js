@@ -9,7 +9,6 @@ const RecipeSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please add a title'],
     unique: true,
-    maxlength: [40, 'Title cannot be more than 40 characters'],
   },
   shortDescription: {
     type: String,
@@ -17,7 +16,6 @@ const RecipeSchema = new mongoose.Schema({
   description: {
     type: String,
     required: true,
-    maxlength: [200, 'Description cannot be more than 200 characters'],
   },
   ingredients: [IngredientSchema],
   rates: [Number],

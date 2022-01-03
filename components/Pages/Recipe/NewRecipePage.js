@@ -1,11 +1,12 @@
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { useState } from 'react/cjs/react.development';
 import { useRouter } from 'next/router';
 import { addRecipeFormData } from '../../../utils/api/recipe';
+import RichtextEditor from '../../RichtextEditor';
 
 function NewRecipePage() {
   const [previewImage, setPreviewImage] = useState(null);
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, control } = useForm();
   const router = useRouter();
 
   const setPreview = (event) => {
@@ -34,63 +35,70 @@ function NewRecipePage() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="pt-5" autoComplete="off">
-      {previewImage && (
-        <div>
-          <span>Preview image</span>
-          <br />
-          <img src={previewImage} style={{ maxHeight: '150px' }} alt="Preview" />
+    <form onSubmit={handleSubmit(onSubmit)} className="py-5" autoComplete="off">
+      <div className="row">
+        <div className="col-md-4 d-flex flex-column justify-content-start">
+          {previewImage && (
+            <div>
+              <span>Preview image</span>
+              <br />
+              <img src={previewImage} style={{ maxHeight: '150px' }} alt="Preview" />
+            </div>
+          )}
+          <div className="form-group pb-3">
+            <label htmlFor="image">Image</label>
+            <input
+              {...register('image')}
+              onChange={setPreview}
+              className="form-control"
+              type="file"
+              id="image"
+              accept="image/png, image/gif, image/jpeg"
+            />
+          </div>
         </div>
-      )}
-      <div className="form-group pb-3">
-        <label htmlFor="image">Image</label>
-        <input
-          {...register('image')}
-          onChange={setPreview}
-          className="form-control"
-          type="file"
-          id="image"
-          accept="image/png, image/gif, image/jpeg"
-        />
-      </div>
-      <div className="form-group pb-3">
-        <label htmlFor="title">Title</label>
-        <input
-          {...register('title', { required: true })}
-          className="form-control"
-          type="text"
-          id="title"
-        />
+        <div className="col-md-8 d-flex flex-column justify-content-start">
+          <div className="form-group pb-3">
+            <label htmlFor="title">Title</label>
+            <input
+              {...register('title', { required: true })}
+              className="form-control"
+              type="text"
+              id="title"
+            />
+          </div>
+          <div className="form-group pb-3">
+            <label htmlFor="author">Author</label>
+            <input {...register('author')} className="form-control" type="text" id="author" />
+          </div>
+        </div>
       </div>
       <div className="form-group pb-3">
         <label htmlFor="short-description">Short Description</label>
-        <input
+        <textarea
           {...register('shortDescription', { required: true })}
+          rows={2}
           className="form-control"
           type="text"
           id="short-description"
         />
       </div>
       <div className="form-group pb-3">
-        <label htmlFor="ingredients">Ingredients</label>
-        <input {...register('ingredients')} className="form-control" type="text" id="ingredients" />
-      </div>
-      <div className="form-group pb-3">
-        <label htmlFor="description">Description</label>
-        <textarea
-          {...register('description', { required: true })}
-          rows={5}
-          className="form-control"
-          id="description"
+        <label htmlFor="description">Method</label>
+        <Controller
+          name="description"
+          defaultValue=""
+          control={control}
+          render={({ field: { onChange, onBlur, ref } }) => (
+            <RichtextEditor ref={ref} onChange={onChange} onBlur={onBlur} />
+          )}
         />
       </div>
-      <div className="form-group pb-3">
-        <label htmlFor="author">Author</label>
-        <input {...register('author')} className="form-control" type="text" id="author" />
+      <div className="form-group-pb-3">
+        <button className="btn btn-primary d-block ms-auto" type="submit">
+          Submit
+        </button>
       </div>
-      <button className="btn btn-primary" type="submit">
-        Submit
-      </button>
     </form>
   );
 }

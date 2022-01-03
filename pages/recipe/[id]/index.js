@@ -1,6 +1,11 @@
+/* eslint-disable react/no-danger */
 import { Rating } from 'semantic-ui-react';
+import recipePropType from '../../../propTypes/recipePropType';
+import { getRecipe } from '../../../utils/api/recipe';
 
-function EditRecipe() {
+function EditRecipe({
+  recipe: { title, author, rates, shortDescription, ingredients, image, description },
+}) {
   return (
     <>
       <section style={{ backgroundColor: '#f0f0f0' }}>
@@ -8,24 +13,22 @@ function EditRecipe() {
           <div className="container">
             <div className="row py-3">
               <div className="col-md-4">
-                <img
-                  src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/mojito-cocktails-150961e.jpg?quality=90&webp=true&resize=375,341"
-                  alt="mochito"
-                  className="w-100"
-                />
+                <img src={image} alt={title} className="w-100" />
               </div>
               <div className="col-md-8">
-                <h1 className="h2">Mojito</h1>
+                <h1 className="h2">{title}</h1>
                 <div className="author">
-                  <span>By: Good Food team</span>
+                  <span>{author}</span>
                 </div>
                 <div className="rating">
-                  <Rating icon="star" defaultRating={3} maxRating={5} /> 22 ratings
+                  <Rating
+                    icon="star"
+                    defaultRating={rates.reduce((acc, rate) => acc + rate) / rates.length}
+                    maxRating={5}
+                  />{' '}
+                  {rates.length} ratings
                 </div>
-                <div className="short-description">
-                  Mix this classic cocktail for a party using fresh mint, white rum, sugar, zesty
-                  lime and cooling soda water. Play with the quantities to suit your taste.
-                </div>
+                <div className="short-description">{shortDescription}</div>
               </div>
             </div>
           </div>
@@ -34,28 +37,23 @@ function EditRecipe() {
       <div className="container my-3">
         <div className="row">
           <div className="col-md-4">
-            <h3>Ingredients</h3>
-            <ul className="list-group list-group-flush">
-              <li className="list-group-item">Lime: 1 piece</li>
-              <li className="list-group-item">Sugar: 1 tsp</li>
-              <li className="list-group-item">Mint: 3 leaves</li>
-              <li className="list-group-item">Rum: 60ml</li>
-              <li className="list-group-item">Soda</li>
-            </ul>
+            {ingredients && (
+              <>
+                <h3>Ingredients</h3>
+                <ul className="list-group list-group-flush">
+                  {ingredients.map(({ name, amount }) => (
+                    <li className="list-group-item">
+                      {name}
+                      {amount ? `: ${amount}` : ''}
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
           </div>
           <div className="col-md-8">
             <h3>Method</h3>
-            <h4>STEP 1</h4>
-            <p>
-              Muddle the lime juice, sugar and mint leaves in a small jug, crushing the mint as you
-              go – you can use the end of a rolling pin for this. Pour into a tall glass and add a
-              handful of ice.
-            </p>
-            <h4>STEP 2</h4>
-            <p>
-              Pour over the rum, stirring with a long-handled spoon. Top up with soda water, garnish
-              with mint and serve.
-            </p>
+            <p className="mt-3" dangerouslySetInnerHTML={{ __html: description }} />
           </div>
         </div>
       </div>
@@ -63,11 +61,13 @@ function EditRecipe() {
   );
 }
 
-// EditNote.getInitialProps = async ({ query: { id } }) => {
-//   const res = await fetch(`http://localhost:3000/api/notes/${id}`);
-//   const { data } = await res.json();
+EditRecipe.propTypes = {
+  recipe: recipePropType.isRequired,
+};
 
-//   return { note: data };
-// };
+EditRecipe.getInitialProps = async ({ query: { id } }) => {
+  const recipe = await getRecipe(id);
+  return { recipe };
+};
 
 export default EditRecipe;

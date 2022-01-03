@@ -2,8 +2,8 @@ import formidable from 'formidable';
 import fs from 'fs';
 import path from 'path';
 
-export function setFailedRequest(res) {
-  return res.status(400).json({ success: false });
+export function setFailedRequest(res, msg) {
+  return res.status(400).json({ success: false, msg });
 }
 
 export function setSuccessfulRequest(res, data) {
