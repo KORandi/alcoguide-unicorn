@@ -1,10 +1,6 @@
-import propTypes from 'prop-types';
-import { useState } from 'react/cjs/react.development';
-import React from 'react';
+import { useState, createContext, useContext, useMemo, useEffect } from 'react';
 import { getAllIngredients } from '../../utils/api/ingredient';
 import { getAllRecipes } from '../../utils/api/recipe';
-
-const { createContext, useContext, useMemo, useEffect } = require('react');
 
 const AppContext = createContext();
 
@@ -43,10 +39,6 @@ export function AppContextWrapper({ children }) {
     </AppContext.Provider>
   );
 }
-
-AppContextWrapper.propTypes = {
-  children: propTypes.instanceOf(React.Component).isRequired,
-};
 
 export function useAppContext() {
   return useContext(AppContext);

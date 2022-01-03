@@ -1,5 +1,5 @@
 import { useForm, Controller } from 'react-hook-form';
-import { useState } from 'react/cjs/react.development';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { addRecipeFormData } from '../../../utils/api/recipe';
 import RichtextEditor from '../../RichtextEditor';

@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import Link from 'next/link';
-import { useState } from 'react/cjs/react.development';
+import { useState } from 'react';
 import { Icon, Menu, Sidebar } from 'semantic-ui-react';
 
 function Navbar() {

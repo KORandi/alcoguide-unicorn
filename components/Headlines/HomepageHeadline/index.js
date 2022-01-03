@@ -1,6 +1,5 @@
 import propTypes from 'prop-types';
-import { useEffect } from 'react';
-import { useState } from 'react/cjs/react.development';
+import { useEffect, useState } from 'react';
 
 function HomepageHeadline({ quote, onClick }) {
   const [headline, setHeadline] = useState('');

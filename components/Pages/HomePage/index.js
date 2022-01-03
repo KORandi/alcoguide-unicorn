@@ -1,4 +1,4 @@
-import { useState } from 'react/cjs/react.development';
+import { useState } from 'react';
 import classNames from 'classnames';
 import Head from 'next/head';
 import { Divider } from 'semantic-ui-react';
