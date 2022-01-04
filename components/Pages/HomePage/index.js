@@ -5,7 +5,7 @@ import { Divider } from 'semantic-ui-react';
 import Link from 'next/link';
 import SearchForm from '../../Forms/Search';
 import HomepageHeadline from '../../Headlines/HomepageHeadline';
-import { useAppContext } from '../../context/state';
+import { useAppContext } from '../../../utils/context/state';
 
 function HomePage() {
   const [showForm, setShowForm] = useState(false);

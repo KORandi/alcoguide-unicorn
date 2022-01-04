@@ -6,7 +6,7 @@ import {
   setSuccessfulRequest,
   uploadFile,
 } from '../../../utils/apiUtils';
-import RecipeSchema from '../../../models/Recipe';
+import RecipeSchema from '../../../utils/models/Recipe';
 
 // set bodyparser
 export const config = {

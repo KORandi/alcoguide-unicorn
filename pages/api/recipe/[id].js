@@ -1,6 +1,6 @@
 import dbConnect from '../../../utils/dbConnect';
 import apiHandler from '../../../utils/apiHandler';
-import Recipe from '../../../models/Recipe';
+import Recipe from '../../../utils/models/Recipe';
 import { setFailedRequest, setSuccessfulRequest } from '../../../utils/apiUtils';
 
 dbConnect();

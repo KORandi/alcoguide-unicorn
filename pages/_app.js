@@ -3,7 +3,7 @@ import 'animate.css';
 import 'hamburgers/dist/hamburgers.min.css';
 import '../css/style.css';
 import Layout from '../components/Layout';
-import { AppContextWrapper } from '../components/context/state';
+import { AppContextWrapper } from '../utils/context/state';
 
 function MyApp({ Component, pageProps }) {
   return (

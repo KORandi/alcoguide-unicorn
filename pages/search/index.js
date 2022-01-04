@@ -1,6 +1,6 @@
 import propTypes from 'prop-types';
 import SearchResult from '../../components/Pages/SearchResult';
-import { useAppContext } from '../../components/context/state';
+import { useAppContext } from '../../utils/context/state';
 
 function SearchPage({ query }) {
   const { ingredients, recipes } = useAppContext();

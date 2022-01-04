@@ -1,7 +1,7 @@
 import dbConnect from '../../../utils/dbConnect';
 import apiHandler from '../../../utils/apiHandler';
 import { setSuccessfulRequest } from '../../../utils/apiUtils';
-import Ingredient from '../../../models/Ingredient';
+import Ingredient from '../../../utils/models/Ingredient';
 
 dbConnect();
 

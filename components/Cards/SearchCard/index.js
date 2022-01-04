@@ -1,11 +1,12 @@
 import propTypes from 'prop-types';
 import { Label, Rating } from 'semantic-ui-react';
 import Link from 'next/link';
-import recipePropType from '../../../propTypes/recipePropType';
+import recipePropType from '../../../utils/propTypes/recipePropType';
 
-function SearchCard({ ingredients, recipe: { title, image, shortDescription, _id: id } }) {
-  const hasIngredients = ['apple', 'pineapple', 'peach', 'watermelon', 'something'];
-
+function SearchCard({
+  ingredients,
+  recipe: { title, image, ingredients: hasIngredients, shortDescription, _id: id },
+}) {
   return (
     <div className="card">
       {image && <img src={image} alt={title} />}
@@ -33,14 +34,14 @@ function SearchCard({ ingredients, recipe: { title, image, shortDescription, _id
           {hasIngredients.map((hasIngredient) => (
             <Label
               className="mt-1"
-              key={hasIngredient}
+              key={hasIngredient._id}
               color={
-                ingredients.some((ingredient) => ingredient.name === hasIngredient)
+                ingredients.some((ingredient) => ingredient._id === hasIngredient._id)
                   ? 'green'
                   : 'teal'
               }
             >
-              {hasIngredient}
+              {hasIngredient.name}
             </Label>
           ))}
         </div>

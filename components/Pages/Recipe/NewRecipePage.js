@@ -3,11 +3,14 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { addRecipeFormData } from '../../../utils/api/recipe';
 import RichtextEditor from '../../RichtextEditor';
+import SearchInput from '../../Forms/Search/SearchInput';
+import { useAppContext } from '../../../utils/context/state';
 
 function NewRecipePage() {
   const [previewImage, setPreviewImage] = useState(null);
   const { register, handleSubmit, control } = useForm();
   const router = useRouter();
+  const { ingredients } = useAppContext();
 
   const setPreview = (event) => {
     const [file] = event.target.files;
@@ -18,15 +21,19 @@ function NewRecipePage() {
     }
   };
 
-  const onSubmit = async ({ image, title, shortDescription, ingredients, description, author }) => {
+  const onSubmit = async ({
+    image,
+    title,
+    shortDescription,
+    ingredients: dataIngredients,
+    description,
+    author,
+  }) => {
     const formData = new FormData();
     formData.append('image', image[0]);
     formData.append('title', title);
     formData.append('shortDescription', shortDescription);
-    formData.append(
-      'ingredients',
-      JSON.stringify([{ _id: '61ce5d5b8e7470db675128fe', name: 'apple' }])
-    );
+    formData.append('ingredients', JSON.stringify(dataIngredients));
     formData.append('rates', JSON.stringify([1, 2, 3, 4, 5]));
     formData.append('description', description);
     formData.append('author', author);
@@ -82,6 +89,19 @@ function NewRecipePage() {
           type="text"
           id="short-description"
         />
+      </div>
+      <div className="form-group pb-3">
+        <label htmlFor="ingredients">Ingredients</label>
+        <div>
+          <Controller
+            control={control}
+            name="ingredients"
+            defaultValue={[]}
+            render={({ field, fieldState }) => (
+              <SearchInput data={ingredients} {...field} {...fieldState} />
+            )}
+          />
+        </div>
       </div>
       <div className="form-group pb-3">
         <label htmlFor="description">Method</label>

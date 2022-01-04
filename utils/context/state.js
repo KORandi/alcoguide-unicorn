@@ -1,6 +1,6 @@
 import { useState, createContext, useContext, useMemo, useEffect } from 'react';
-import { getAllIngredients } from '../../utils/api/ingredient';
-import { getAllRecipes } from '../../utils/api/recipe';
+import { getAllIngredients } from '../api/ingredient';
+import { getAllRecipes } from '../api/recipe';
 
 const AppContext = createContext();
 

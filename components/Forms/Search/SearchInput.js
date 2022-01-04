@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React, { useState } from 'react';
 import { Icon, Label } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import ingredientPropType from '../../../propTypes/ingredientPropType';
+import ingredientPropType from '../../../utils/propTypes/ingredientPropType';
 
 const SearchInput = React.forwardRef(({ onChange, value, data }, ref) => {
   const [inputValue, setInputValue] = useState('');
