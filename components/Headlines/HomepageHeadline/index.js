@@ -30,9 +30,7 @@ function HomepageHeadline({ quote, onClick }) {
       </figure>
       <div>
         <button
-          onClick={() => {
-            onClick();
-          }}
+          onClick={onClick}
           className="btn btn-primary"
           type="button"
         >
