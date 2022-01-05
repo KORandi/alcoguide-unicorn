@@ -12,31 +12,38 @@ export function getOrderPlacement(recipe, ingredients = []) {
   }, 0);
 }
 
-export const handleRecipeRemove = async (id) => {
+export const useRecipeActions = () => {
   const router = useRouter();
   const { fetchRecipes } = useAppContext();
 
-  const result = await Swal.fire({
-    title: 'Are you sure you want to remove this recipe?',
-    text: "You won't be able to revert this!",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, delete it!',
-  });
-  if (!result.isConfirmed) {
-    return;
-  }
-  try {
-    await deleteRecipe(id);
-  } catch (error) {
-    Swal.fire('Oops...', error, 'error');
-    return;
-  }
-  await Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
-  await fetchRecipes();
-  router.push('/search');
+  const removeRecipe = async (id) => {
+    const result = await Swal.fire({
+      title: 'Are you sure you want to remove this recipe?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    });
+    if (!result.isConfirmed) {
+      return;
+    }
+    try {
+      await deleteRecipe(id);
+    } catch (error) {
+      Swal.fire('Oops...', error, 'error');
+      return;
+    }
+    await Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+    await fetchRecipes();
+    router.push('/search');
+  };
+
+  return {
+    removeRecipe,
+    router,
+  };
 };
 
 export function useAppSearch() {

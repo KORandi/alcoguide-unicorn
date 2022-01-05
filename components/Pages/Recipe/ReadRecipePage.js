@@ -3,7 +3,7 @@ import { Rating } from 'semantic-ui-react';
 import { useRouter } from 'next/router';
 import propTypes from 'prop-types';
 import ingredientPropType from '../../../utils/propTypes/ingredientPropType';
-import { handleRecipeRemove } from '../../../utils/utils';
+import { useRecipeActions } from '../../../utils/utils';
 
 function ReadRecipePage({
   _id,
@@ -15,7 +15,7 @@ function ReadRecipePage({
   image,
   description,
 }) {
-  const router = useRouter();
+  const { removeRecipe, router } = useRecipeActions();
 
   return (
     <>
@@ -24,7 +24,7 @@ function ReadRecipePage({
           <div className="col-12 d-flex justify-content-end">
             <div>
               <button
-                onClick={() => handleRecipeRemove(_id)}
+                onClick={() => removeRecipe(_id)}
                 className="btn btn-danger me-3"
                 type="button"
               >
