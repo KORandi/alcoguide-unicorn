@@ -43,84 +43,95 @@ function NewRecipePage() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="py-5" autoComplete="off">
-      <div className="row">
-        <div className="col-md-4 d-flex flex-column justify-content-start">
-          {previewImage && (
-            <div>
-              <span>Preview image</span>
-              <br />
-              <img src={previewImage} style={{ maxHeight: '150px' }} alt="Preview" />
+    <>
+      <div className="row pt-5">
+        <div className="col-12 d-flex justify-content-end">
+          <div>
+            <button onClick={() => router.back()} className="btn btn-primary" type="button">
+              Go back <i className="bi bi-arrow-return-left" />
+            </button>
+          </div>
+        </div>
+      </div>
+      <form onSubmit={handleSubmit(onSubmit)} className="py-3" autoComplete="off">
+        <div className="row">
+          <div className="col-md-4 d-flex flex-column justify-content-start">
+            {previewImage && (
+              <div>
+                <span>Preview image</span>
+                <br />
+                <img src={previewImage} style={{ maxHeight: '150px' }} alt="Preview" />
+              </div>
+            )}
+            <div className="form-group pb-3">
+              <label htmlFor="image">Image</label>
+              <input
+                {...register('image')}
+                onChange={setPreview}
+                className="form-control"
+                type="file"
+                id="image"
+                accept="image/png, image/gif, image/jpeg"
+              />
             </div>
-          )}
-          <div className="form-group pb-3">
-            <label htmlFor="image">Image</label>
-            <input
-              {...register('image')}
-              onChange={setPreview}
-              className="form-control"
-              type="file"
-              id="image"
-              accept="image/png, image/gif, image/jpeg"
+          </div>
+          <div className="col-md-8 d-flex flex-column justify-content-start">
+            <div className="form-group pb-3">
+              <label htmlFor="title">Title</label>
+              <input
+                {...register('title', { required: true })}
+                className="form-control"
+                type="text"
+                id="title"
+              />
+            </div>
+            <div className="form-group pb-3">
+              <label htmlFor="author">Author</label>
+              <input {...register('author')} className="form-control" type="text" id="author" />
+            </div>
+          </div>
+        </div>
+        <div className="form-group pb-3">
+          <label htmlFor="short-description">Short Description</label>
+          <textarea
+            {...register('shortDescription', { required: true })}
+            rows={2}
+            className="form-control"
+            type="text"
+            id="short-description"
+          />
+        </div>
+        <div className="form-group pb-3">
+          <label htmlFor="ingredients">Ingredients</label>
+          <div>
+            <Controller
+              control={control}
+              name="ingredients"
+              defaultValue={[]}
+              render={({ field, fieldState }) => (
+                <SearchInput data={ingredients} {...field} {...fieldState} />
+              )}
             />
           </div>
         </div>
-        <div className="col-md-8 d-flex flex-column justify-content-start">
-          <div className="form-group pb-3">
-            <label htmlFor="title">Title</label>
-            <input
-              {...register('title', { required: true })}
-              className="form-control"
-              type="text"
-              id="title"
-            />
-          </div>
-          <div className="form-group pb-3">
-            <label htmlFor="author">Author</label>
-            <input {...register('author')} className="form-control" type="text" id="author" />
-          </div>
-        </div>
-      </div>
-      <div className="form-group pb-3">
-        <label htmlFor="short-description">Short Description</label>
-        <textarea
-          {...register('shortDescription', { required: true })}
-          rows={2}
-          className="form-control"
-          type="text"
-          id="short-description"
-        />
-      </div>
-      <div className="form-group pb-3">
-        <label htmlFor="ingredients">Ingredients</label>
-        <div>
+        <div className="form-group pb-3">
+          <label htmlFor="description">Method</label>
           <Controller
+            name="description"
+            defaultValue=""
             control={control}
-            name="ingredients"
-            defaultValue={[]}
-            render={({ field, fieldState }) => (
-              <SearchInput data={ingredients} {...field} {...fieldState} />
+            render={({ field: { onChange, onBlur, ref } }) => (
+              <RichtextEditor ref={ref} onChange={onChange} onBlur={onBlur} />
             )}
           />
         </div>
-      </div>
-      <div className="form-group pb-3">
-        <label htmlFor="description">Method</label>
-        <Controller
-          name="description"
-          defaultValue=""
-          control={control}
-          render={({ field: { onChange, onBlur, ref } }) => (
-            <RichtextEditor ref={ref} onChange={onChange} onBlur={onBlur} />
-          )}
-        />
-      </div>
-      <div className="form-group-pb-3">
-        <button className="btn btn-primary d-block ms-auto" type="submit">
-          Submit
-        </button>
-      </div>
-    </form>
+        <div className="form-group-pb-3">
+          <button className="btn btn-primary d-block ms-auto" type="submit">
+            Submit
+          </button>
+        </div>
+      </form>
+    </>
   );
 }
 
