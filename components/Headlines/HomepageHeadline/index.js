@@ -13,6 +13,9 @@ function HomepageHeadline({ quote, onClick }) {
         }, 20)
       );
     }
+    return () => {
+      clearTimeout(timeoutRef);
+    };
   }, [headline]);
 
   return (
@@ -28,7 +31,6 @@ function HomepageHeadline({ quote, onClick }) {
       <div>
         <button
           onClick={() => {
-            clearTimeout(timeoutRef);
             onClick();
           }}
           className="btn btn-primary"
