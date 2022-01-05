@@ -10,7 +10,7 @@ function NewRecipePage() {
   const [previewImage, setPreviewImage] = useState(null);
   const { register, handleSubmit, control } = useForm();
   const router = useRouter();
-  const { ingredients } = useAppContext();
+  const { ingredients, fetchRecipes } = useAppContext();
 
   const setPreview = (event) => {
     const [file] = event.target.files;
@@ -38,6 +38,7 @@ function NewRecipePage() {
     formData.append('description', description);
     formData.append('author', author);
     await addRecipeFormData(formData);
+    await fetchRecipes();
     router.push('/search');
   };
 

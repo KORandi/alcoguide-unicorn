@@ -10,7 +10,7 @@ export function AppContextWrapper({ children }) {
 
   const fetchIngredients = async () => {
     const newIngredients = await getAllIngredients();
-    setIngredients(newIngredients);
+    setIngredients(newIngredients.sort((a, b) => (a.name > b.name ? 1 : -1)));
   };
 
   const fetchRecipes = async () => {
@@ -31,6 +31,8 @@ export function AppContextWrapper({ children }) {
           setIngredients,
           recipes,
           setRecipes,
+          fetchIngredients,
+          fetchRecipes,
         }),
         [ingredients, recipes]
       )}

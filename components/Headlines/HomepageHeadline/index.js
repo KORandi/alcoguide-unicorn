@@ -3,12 +3,15 @@ import { useEffect, useState } from 'react';
 
 function HomepageHeadline({ quote, onClick }) {
   const [headline, setHeadline] = useState('');
+  const [timeoutRef, setTimeoutRef] = useState(0);
 
   useEffect(() => {
     if (headline.length < quote.length) {
-      setTimeout(() => {
-        setHeadline(headline + quote.charAt(headline.length));
-      }, 20);
+      setTimeoutRef(
+        setTimeout(() => {
+          setHeadline(headline + quote.charAt(headline.length));
+        }, 20)
+      );
     }
   }, [headline]);
 
@@ -25,6 +28,7 @@ function HomepageHeadline({ quote, onClick }) {
       <div>
         <button
           onClick={() => {
+            clearTimeout(timeoutRef);
             onClick();
           }}
           className="btn btn-primary"

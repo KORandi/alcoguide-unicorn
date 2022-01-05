@@ -2,11 +2,17 @@ import propTypes from 'prop-types';
 import { Label, Rating } from 'semantic-ui-react';
 import Link from 'next/link';
 import recipePropType from '../../../utils/propTypes/recipePropType';
+import { useAppSearch } from '../../../utils/utils';
 
 function SearchCard({
   ingredients,
-  recipe: { title, image, ingredients: hasIngredients, shortDescription, _id: id },
+  recipe: { title, image, ingredients: queriedIngredients, shortDescription, _id: id },
 }) {
+  const { addIngredient, removeIngredient } = useAppSearch();
+
+  const hasIngredient = (selectedIngredient) =>
+    ingredients.some((ingredient) => ingredient._id === selectedIngredient._id);
+
   return (
     <div className="card">
       {image && <img src={image} alt={title} />}
@@ -31,18 +37,22 @@ function SearchCard({
       <div className="card-body">
         <h5 className="card-title">{title}</h5>
         <div className="mb-2">
-          {hasIngredients.map((hasIngredient) => (
-            <Label
-              className="mt-1"
-              key={hasIngredient._id}
-              color={
-                ingredients.some((ingredient) => ingredient._id === hasIngredient._id)
-                  ? 'green'
-                  : 'teal'
-              }
-            >
-              {hasIngredient.name}
-            </Label>
+          {queriedIngredients.map((queriedIngredient) => (
+            <span key={queriedIngredient._id} role="button" className="me-1">
+              <Label
+                className="mt-1 cursor-pointer"
+                onClick={() => {
+                  if (!hasIngredient(queriedIngredient)) {
+                    addIngredient(queriedIngredient._id);
+                  } else {
+                    removeIngredient(queriedIngredient._id);
+                  }
+                }}
+                color={hasIngredient(queriedIngredient) ? 'green' : 'teal'}
+              >
+                {queriedIngredient.name}
+              </Label>
+            </span>
           ))}
         </div>
         <p className="card-text">{shortDescription}</p>

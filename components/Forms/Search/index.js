@@ -1,22 +1,17 @@
 import { Controller, useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
 
 import propTypes from 'prop-types';
 import SearchInput from './SearchInput';
+import { useAppSearch } from '../../../utils/utils';
 
 function SearchForm({ ingredients }) {
-  const router = useRouter();
   const { control, handleSubmit } = useForm();
+  const { setIngredients } = useAppSearch();
 
   const onSubmit = ({ search = [] }) => {
-    if (search.length === 0) {
-      return;
+    if (search.length > 0) {
+      setIngredients(search);
     }
-    router.push(
-      `/search?${new URLSearchParams({
-        ingredients: Object.values(search).map((ingredient) => ingredient._id),
-      }).toString()}`
-    );
   };
 
   return (
