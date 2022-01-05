@@ -1,6 +1,5 @@
 /* eslint-disable react/no-danger */
 import { Rating } from 'semantic-ui-react';
-import { useRouter } from 'next/router';
 import propTypes from 'prop-types';
 import ingredientPropType from '../../../utils/propTypes/ingredientPropType';
 import { useRecipeActions } from '../../../utils/utils';
