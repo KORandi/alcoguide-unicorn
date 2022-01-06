@@ -5,11 +5,9 @@ import { Divider } from 'semantic-ui-react';
 import Link from 'next/link';
 import SearchForm from '../../Forms/Search';
 import HomepageHeadline from '../../Headlines/HomepageHeadline';
-import { useAppContext } from '../../../utils/context/state';
 
 function HomePage() {
   const [showForm, setShowForm] = useState(false);
-  const { ingredients } = useAppContext();
   const quote =
     'Our goal is to help users set up the best alcoholic drinks from current available ingrediences';
 
@@ -35,7 +33,7 @@ function HomePage() {
           })}
         >
           <p className="h2 text-center text-white">What ingredients do you have?</p>
-          <SearchForm ingredients={ingredients} />
+          <SearchForm />
           <Divider horizontal inverted>
             Or
           </Divider>

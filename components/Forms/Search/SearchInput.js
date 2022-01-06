@@ -1,22 +1,31 @@
 import classNames from 'classnames';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Icon, Label } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import ingredientPropType from '../../../utils/propTypes/ingredientPropType';
 
-const SearchInput = React.forwardRef(({ onChange, value, data }, ref) => {
+const SearchInput = React.forwardRef(({ onChange, value: defaultValue, data }, ref) => {
   const [inputValue, setInputValue] = useState('');
   const [showSearchResult, setShowSearchResult] = useState(false);
+  const [value, setValue] = useState(defaultValue);
+
+  useEffect(() => {
+    setValue(defaultValue);
+  }, [defaultValue]);
 
   const addToSearch = (element) => {
     setShowSearchResult(false);
-    onChange([...value, element]);
+    const newValue = [...value, element];
+    setValue(newValue);
+    onChange(newValue);
     setInputValue('');
     document.activeElement.blur();
   };
 
   const removeFromSearch = (element) => {
-    onChange(value.filter((el) => el !== element));
+    const newValue = value.filter((el) => el !== element);
+    setValue(newValue);
+    onChange(newValue);
   };
 
   return (
@@ -84,9 +93,15 @@ const SearchInput = React.forwardRef(({ onChange, value, data }, ref) => {
 });
 
 SearchInput.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.arrayOf(ingredientPropType).isRequired,
-  data: PropTypes.arrayOf(ingredientPropType).isRequired,
+  onChange: PropTypes.func,
+  value: PropTypes.arrayOf(ingredientPropType),
+  data: PropTypes.arrayOf(ingredientPropType),
+};
+
+SearchInput.defaultProps = {
+  onChange: () => {},
+  value: [],
+  data: []
 };
 
 export default SearchInput;

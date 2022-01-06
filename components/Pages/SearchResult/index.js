@@ -4,10 +4,14 @@ import { useEffect, useState } from 'react';
 import ingredientPropType from '../../../utils/propTypes/ingredientPropType';
 import recipePropType from '../../../utils/propTypes/recipePropType';
 import SearchCard from '../../Cards/SearchCard';
-import { getOrderPlacement } from '../../../utils/utils';
+import { getOrderPlacement, useAppSearch } from '../../../utils/utils';
+import SearchInput from '../../Forms/Search/SearchInput';
+import { useAppContext } from '../../../utils/context/state';
 
 function SearchResult({ ingredients, recipes }) {
   const [modifiedRecipes, setModifiedRecipes] = useState([]);
+  const { ingredients: appIngredients } = useAppContext();
+  const { setIngredients } = useAppSearch();
 
   useEffect(() => {
     setModifiedRecipes(
@@ -20,12 +24,26 @@ function SearchResult({ ingredients, recipes }) {
   return (
     <div className="py-5">
       <div className="row">
-        <div className="col-md-12 d-flex justify-content-end">
-          <Link href="/recipe/new">
-            <button className="btn btn-primary" type="button">
-              Add recipe <i className="bi bi-plus-circle" />
-            </button>
-          </Link>
+        <div className="col-md-12 d-md-flex justify-content-between">
+          <div className="d-flex" style={{ maxWidth: '280px' }}>
+            <SearchInput
+              data={appIngredients}
+              value={ingredients}
+              onChange={(data) => setIngredients(data)}
+            />
+            <div className="ms-3">
+              <button className="btn btn-primary" type="button">
+                Search
+              </button>
+            </div>
+          </div>
+          <div>
+            <Link href="/recipe/new">
+              <button className="btn btn-primary d-block ms-auto" type="button">
+                Add recipe <i className="bi bi-plus-circle" />
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
       <div className="row">

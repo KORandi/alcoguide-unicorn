@@ -1,12 +1,11 @@
 import { Controller, useForm } from 'react-hook-form';
 
-import propTypes from 'prop-types';
 import SearchInput from './SearchInput';
 import { useAppSearch } from '../../../utils/utils';
 
-function SearchForm({ ingredients }) {
+function SearchForm() {
   const { control, handleSubmit } = useForm();
-  const { setIngredients } = useAppSearch();
+  const { setIngredients, ingredients } = useAppSearch();
 
   const onSubmit = ({ search = [] }) => {
     if (search.length > 0) {
@@ -35,14 +34,5 @@ function SearchForm({ ingredients }) {
     </form>
   );
 }
-
-SearchForm.propTypes = {
-  ingredients: propTypes.arrayOf(
-    propTypes.shape({
-      _id: propTypes.string.isRequired,
-      name: propTypes.string.isRequired,
-    })
-  ).isRequired,
-};
 
 export default SearchForm;

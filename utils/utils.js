@@ -94,6 +94,10 @@ export function useAppSearch() {
   };
 
   const setIngredients = (newIngredients) => {
+    if (newIngredients.length === 0) {
+      push('/search');
+      return;
+    }
     push(
       `/search?${new URLSearchParams({
         ingredients: Object.values(newIngredients).map((ingredient) => ingredient._id),
