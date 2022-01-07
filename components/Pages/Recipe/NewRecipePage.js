@@ -1,16 +1,21 @@
-import { useForm, Controller } from 'react-hook-form';
-import { useState } from 'react';
-import { useRouter } from 'next/router';
-import { addRecipeFormData } from '../../../utils/api/recipe';
+import { Controller } from 'react-hook-form';
+import { useEffect } from 'react';
+import propTypes from 'prop-types';
 import RichtextEditor from '../../RichtextEditor';
 import SearchInput from '../../Forms/Search/SearchInput';
-import { useAppContext } from '../../../utils/context/state';
+import { useRecipeActions } from '../../../utils/utils';
 
-function NewRecipePage() {
-  const [previewImage, setPreviewImage] = useState(null);
-  const { register, handleSubmit, control } = useForm();
-  const router = useRouter();
-  const { ingredients, fetchRecipes } = useAppContext();
+function NewRecipePage({ recipe }) {
+  const {
+    router,
+    ingredients,
+    control,
+    previewImage,
+    setPreviewImage,
+    pourForm,
+    handleSubmit,
+    register,
+  } = useRecipeActions();
 
   const setPreview = (event) => {
     const [file] = event.target.files;
@@ -21,26 +26,12 @@ function NewRecipePage() {
     }
   };
 
-  const onSubmit = async ({
-    image,
-    title,
-    shortDescription,
-    ingredients: dataIngredients,
-    description,
-    author,
-  }) => {
-    const formData = new FormData();
-    formData.append('image', image[0]);
-    formData.append('title', title);
-    formData.append('shortDescription', shortDescription);
-    formData.append('ingredients', JSON.stringify(dataIngredients));
-    formData.append('rates', JSON.stringify([1, 2, 3, 4, 5]));
-    formData.append('description', description);
-    formData.append('author', author);
-    await addRecipeFormData(formData);
-    await fetchRecipes();
-    router.push('/search');
-  };
+  useEffect(() => {
+    if (!recipe) {
+      return;
+    }
+    pourForm(recipe);
+  }, [recipe]);
 
   return (
     <>
@@ -53,7 +44,7 @@ function NewRecipePage() {
           </div>
         </div>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)} className="py-3" autoComplete="off">
+      <form onSubmit={handleSubmit} className="py-3" autoComplete="off">
         <div className="row">
           <div className="col-md-4 d-flex flex-column justify-content-start">
             {previewImage && (
@@ -120,11 +111,12 @@ function NewRecipePage() {
             name="description"
             defaultValue=""
             control={control}
-            render={({ field: { onChange, onBlur, ref } }) => (
-              <RichtextEditor ref={ref} onChange={onChange} onBlur={onBlur} />
+            render={({ field: { value, onChange, onBlur, ref } }) => (
+              <RichtextEditor value={value} ref={ref} onChange={onChange} onBlur={onBlur} />
             )}
           />
         </div>
+        <input {...register('_id')} type="hidden" />
         <div className="form-group-pb-3">
           <button className="btn btn-primary d-block ms-auto" type="submit">
             Submit
@@ -134,5 +126,14 @@ function NewRecipePage() {
     </>
   );
 }
+
+NewRecipePage.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  recipe: propTypes.object,
+};
+
+NewRecipePage.defaultProps = {
+  recipe: null,
+};
 
 export default NewRecipePage;

@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 
 const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
 
-const RichtextEditor = forwardRef(({ onChange, onBlur }, ref) => {
+const RichtextEditor = forwardRef(({ value, onChange, onBlur }, ref) => {
   const config = React.useMemo(
     () => (
       {
@@ -20,7 +20,7 @@ const RichtextEditor = forwardRef(({ onChange, onBlur }, ref) => {
 
   return (
     <div>
-      <JoditEditor config={config} ref={ref} onChange={onChange} onBlur={onBlur} />
+      <JoditEditor config={config} value={value} ref={ref} onChange={onChange} onBlur={onBlur} />
     </div>
   );
 });

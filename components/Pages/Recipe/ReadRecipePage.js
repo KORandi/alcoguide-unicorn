@@ -18,18 +18,25 @@ function ReadRecipePage({
 
   return (
     <>
-      <div className="container py-3">
+      <div className="container py-2">
         <div className="row">
           <div className="col-12 d-flex justify-content-end">
             <div>
               <button
                 onClick={() => removeRecipe(_id)}
-                className="btn btn-danger me-3"
+                className="btn btn-danger me-3 my-1"
                 type="button"
               >
                 Remove recipe <i className="bi bi-eraser-fill" />
               </button>
-              <button onClick={() => router.back()} className="btn btn-primary" type="button">
+              <button
+                onClick={() => router.push(`/recipe/edit/${_id}`)}
+                className="btn btn-secondary me-3 my-1"
+                type="button"
+              >
+                Edit recipe <i className="bi bi-pencil-fill" />
+              </button>
+              <button onClick={() => router.back()} className="btn btn-primary my-1" type="button">
                 Go back <i className="bi bi-arrow-return-left" />
               </button>
             </div>

@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
-import { deleteRecipe } from './api/recipe';
+import { addRecipeFormData, deleteRecipe } from './api/recipe';
 import { useAppContext } from './context/state';
 
 export function getOrderPlacement(recipe, ingredients = []) {
@@ -14,7 +16,59 @@ export function getOrderPlacement(recipe, ingredients = []) {
 
 export const useRecipeActions = () => {
   const router = useRouter();
-  const { fetchRecipes } = useAppContext();
+  const { register, handleSubmit: handleSubmitForm, control, setValue, getValues } = useForm();
+  const { fetchRecipes, ingredients } = useAppContext();
+  const [previewImage, setPreviewImage] = useState(null);
+
+  const pourForm = (recipe) => {
+    const formValues = getValues();
+
+    Object.entries(recipe)
+      .reduce((acc, [key, value]) => {
+        if (key === 'image') {
+          setPreviewImage(value);
+          return acc;
+        }
+
+        if (key in formValues) {
+          acc.push([key, value]);
+        }
+
+        return acc;
+      }, [])
+      .forEach(([key, value]) => {
+        setValue(key, value);
+      });
+  };
+
+  const handleSubmit = handleSubmitForm(
+    async ({
+      _id,
+      image,
+      title,
+      shortDescription,
+      ingredients: dataIngredients,
+      description,
+      author,
+    }) => {
+      const formData = new FormData();
+      if (_id) {
+        formData.append('id', _id);
+      }
+      if (image?.[0]) {
+        formData.append('image', image[0]);
+      }
+      formData.append('title', title);
+      formData.append('shortDescription', shortDescription);
+      formData.append('ingredients', JSON.stringify(dataIngredients));
+      formData.append('rates', JSON.stringify([1, 2, 3, 4, 5]));
+      formData.append('description', description);
+      formData.append('author', author);
+      await addRecipeFormData(formData);
+      await fetchRecipes();
+      router.push('/search');
+    }
+  );
 
   const removeRecipe = async (id) => {
     const result = await Swal.fire({
@@ -41,8 +95,15 @@ export const useRecipeActions = () => {
   };
 
   return {
-    removeRecipe,
     router,
+    previewImage,
+    control,
+    ingredients,
+    removeRecipe,
+    setPreviewImage,
+    pourForm,
+    register,
+    handleSubmit,
   };
 };
 
