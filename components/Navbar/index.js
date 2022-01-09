@@ -5,6 +5,10 @@ import { Icon, Menu, Sidebar } from 'semantic-ui-react';
 
 function Navbar() {
   const [visible, setVisible] = useState(false);
+  const sidebarConfig = {
+    vertical: 'true',
+    inverted: 'true',
+  };
 
   return (
     <>
@@ -57,11 +61,10 @@ function Navbar() {
           </button>
         </div>
         <Sidebar
-          as={Menu}
           animation="overlay"
           direction="left"
-          inverted
-          vertical
+          inverted={sidebarConfig.inverted}
+          vertical={sidebarConfig.vertical}
           onHide={() => setVisible(false)}
           visible={visible}
         >

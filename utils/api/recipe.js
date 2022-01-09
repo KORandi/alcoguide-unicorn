@@ -45,3 +45,11 @@ export async function addRecipeFormData(recipe) {
   });
   return res;
 }
+
+export async function editRecipeFormData(id, recipe) {
+  const res = await fetch(`${host}/api/recipe/${id}`, {
+    method: 'PUT',
+    body: recipe,
+  });
+  return res;
+}

@@ -1,9 +1,22 @@
 import dbConnect from '../../../utils/dbConnect';
 import apiHandler from '../../../utils/apiHandler';
 import Recipe from '../../../utils/models/Recipe';
-import { setFailedRequest, setSuccessfulRequest } from '../../../utils/apiUtils';
+import {
+  parseRequest,
+  setFailedRequest,
+  setSuccessfulRequest,
+  getImageLinkFromFiles,
+  setInputArray,
+} from '../../../utils/apiUtils';
 
 dbConnect();
+
+// set bodyparser
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
 
 export default apiHandler({
   get: async ({ id, res }) => {
@@ -13,15 +26,23 @@ export default apiHandler({
     }
     return setSuccessfulRequest(res, recipe);
   },
-  put: async ({ id, body, res }) => {
-    const note = await Recipe.findByIdAndUpdate(id, body, {
-      new: true,
-      runValidators: true,
-    });
-    if (!note) {
-      return setFailedRequest(res);
+  put: async ({ id, req, res }) => {
+    try {
+      const { fields, files } = await parseRequest(req);
+      fields.image = await getImageLinkFromFiles(files);
+      setInputArray(fields, 'ingredients', fields.ingredients);
+      setInputArray(fields, 'rates', fields.rates);
+      const recipe = await Recipe.findByIdAndUpdate(id, fields, {
+        new: true,
+        runValidators: true,
+      });
+      if (!recipe) {
+        return setFailedRequest(res);
+      }
+      return setSuccessfulRequest(res, recipe);
+    } catch (error) {
+      return setFailedRequest(res, error);
     }
-    return setSuccessfulRequest(res, note);
   },
   delete: async ({ id, res }) => {
     const deletedNote = await Recipe.deleteOne({ _id: id });

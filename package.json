@@ -20,6 +20,7 @@
     "isomorphic-unfetch": "^3.0.0",
     "jodit": "^3.11.3",
     "jodit-react": "^1.1.15",
+    "masonry-layout": "^4.2.2",
     "mongoose": "^5.9.6",
     "next": "^9.3.6",
     "node-fetch": "^3.1.0",

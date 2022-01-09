@@ -1,6 +1,7 @@
 import propTypes from 'prop-types';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import dynamic from 'next/dynamic';
 import ingredientPropType from '../../../utils/propTypes/ingredientPropType';
 import recipePropType from '../../../utils/propTypes/recipePropType';
 import SearchCard from '../../Cards/SearchCard';
@@ -8,10 +9,14 @@ import { getOrderPlacement, useAppSearch } from '../../../utils/utils';
 import SearchInput from '../../Forms/Search/SearchInput';
 import { useAppContext } from '../../../utils/context/state';
 
+// const masonry = dynamic(() => import('masonry-layout/masonry'), { ssr: false });
+
 function SearchResult({ ingredients, recipes }) {
   const [modifiedRecipes, setModifiedRecipes] = useState([]);
   const { ingredients: appIngredients } = useAppContext();
   const { setIngredients } = useAppSearch();
+  const [masonry, setMasonry] = useState(null);
+  const rowRef = useRef(null);
 
   useEffect(() => {
     setModifiedRecipes(
@@ -20,6 +25,18 @@ function SearchResult({ ingredients, recipes }) {
         .sort((a, b) => b.orderPlacement - a.orderPlacement)
     );
   }, [recipes]);
+
+  const loadMasonry = async () => {
+    const Masonry = (await import('masonry-layout/masonry')).default;
+    setMasonry(new Masonry(rowRef.current, { percentPosition: true, horizontalOrder: true }));
+  };
+
+  useEffect(() => {
+    loadMasonry();
+    return () => {
+      masonry?.destroy();
+    };
+  }, []);
 
   return (
     <div className="py-5">
@@ -46,7 +63,7 @@ function SearchResult({ ingredients, recipes }) {
           </div>
         </div>
       </div>
-      <div className="row">
+      <div className="row" ref={rowRef}>
         {modifiedRecipes.map((recipe) => (
           <div key={recipe._id} className="col-md-4 col-lg-3 col-sm-6 pt-4">
             <SearchCard ingredients={ingredients} recipe={recipe} />

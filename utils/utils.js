@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
-import { addRecipeFormData, deleteRecipe } from './api/recipe';
+import { addRecipeFormData, deleteRecipe, editRecipeFormData } from './api/recipe';
 import { useAppContext } from './context/state';
 
 export function getOrderPlacement(recipe, ingredients = []) {
@@ -64,7 +64,11 @@ export const useRecipeActions = () => {
       formData.append('rates', JSON.stringify([1, 2, 3, 4, 5]));
       formData.append('description', description);
       formData.append('author', author);
-      await addRecipeFormData(formData);
+      if (_id) {
+        await editRecipeFormData(_id, formData);
+      } else {
+        await addRecipeFormData(formData);
+      }
       await fetchRecipes();
       router.push('/search');
     }

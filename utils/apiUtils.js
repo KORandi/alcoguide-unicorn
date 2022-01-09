@@ -35,3 +35,19 @@ export function parseRequest(req) {
     });
   });
 }
+
+export async function getImageLinkFromFiles(files) {
+  if (Object.keys(files).length > 0) {
+    return uploadFile(files, 'image');
+  }
+  return '';
+}
+
+export function setInputArray(fields, keyName, input) {
+  const parsedData = JSON.parse(input);
+  if (parsedData.length === 0) {
+    return;
+  }
+  // eslint-disable-next-line no-param-reassign
+  fields[keyName] = parsedData;
+}
