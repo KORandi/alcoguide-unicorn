@@ -1,5 +1,5 @@
 import propTypes from 'prop-types';
-import { useEffect, useReducer, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // Should use this logic instead of setState as it doesn't work on onmount hook, see: https://github.com/facebook/react/issues/14066
 let timeoutID = 0;

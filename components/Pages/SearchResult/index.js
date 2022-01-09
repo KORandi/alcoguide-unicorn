@@ -15,7 +15,6 @@ function SearchResult({ ingredients, recipes }) {
   const [modifiedRecipes, setModifiedRecipes] = useState([]);
   const { ingredients: appIngredients } = useAppContext();
   const { setIngredients } = useAppSearch();
-  const [masonry, setMasonry] = useState(null);
   const rowRef = useRef(null);
 
   useEffect(() => {
@@ -25,18 +24,6 @@ function SearchResult({ ingredients, recipes }) {
         .sort((a, b) => b.orderPlacement - a.orderPlacement)
     );
   }, [recipes]);
-
-  const loadMasonry = async () => {
-    const Masonry = (await import('masonry-layout/masonry')).default;
-    setMasonry(new Masonry(rowRef.current, { percentPosition: true, horizontalOrder: true }));
-  };
-
-  useEffect(() => {
-    loadMasonry();
-    return () => {
-      masonry?.destroy();
-    };
-  }, []);
 
   return (
     <div className="py-5">

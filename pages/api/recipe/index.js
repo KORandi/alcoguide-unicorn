@@ -1,8 +1,10 @@
 import dbConnect from '../../../utils/dbConnect';
 import apiHandler from '../../../utils/apiHandler';
 import {
+  getImageLinkFromFiles,
   parseRequest,
   setFailedRequest,
+  setInputArray,
   setSuccessfulRequest,
   uploadFile,
 } from '../../../utils/apiUtils';
@@ -23,33 +25,15 @@ export default apiHandler({
     setSuccessfulRequest(res, recipes);
   },
   post: async ({ res, req }) => {
-    const { fields, files } = await parseRequest(req);
-    fields.image = '';
-    let imageLink;
-    if (Object.keys(files).length > 0) {
-      try {
-        imageLink = await uploadFile(files, 'image');
-      } catch (error) {
-        setFailedRequest(res, error);
-        return;
-      }
-      fields.image = imageLink;
-    }
-    fields.ingredients = JSON.parse(fields.ingredients);
-    if (fields.ingredients.length === 0) {
-      delete fields.ingredients;
-    }
-    fields.rates = JSON.parse(fields.rates);
-    if (fields.rates.length === 0) {
-      delete fields.rates;
-    }
-    let newRecipe;
     try {
-      newRecipe = await RecipeSchema.create(fields);
+      const { fields, files } = await parseRequest(req);
+      fields.image = await getImageLinkFromFiles(files);
+      setInputArray(fields, 'ingredients', fields.ingredients);
+      setInputArray(fields, 'rates', fields.rates);
+      const newRecipe = await RecipeSchema.create(fields);
+      return setSuccessfulRequest(res, newRecipe);
     } catch (error) {
-      setFailedRequest(res, error);
-      return;
+      return setFailedRequest(res, error);
     }
-    setSuccessfulRequest(res, newRecipe);
   },
 });

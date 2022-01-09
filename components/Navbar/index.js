@@ -6,8 +6,8 @@ import { Icon, Menu, Sidebar } from 'semantic-ui-react';
 function Navbar() {
   const [visible, setVisible] = useState(false);
   const sidebarConfig = {
-    vertical: 'true',
-    inverted: 'true',
+    vertical: true,
+    inverted: true,
   };
 
   return (
@@ -18,7 +18,7 @@ function Navbar() {
           <Link href="/">
             <a className="navbar-brand">AlcoGuide</a>
           </Link>
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0 d-flex flex-row">
+          <ul className="navbar-nav me-auto mb-2 mb-md-0 d-flex flex-row">
             <li className="nav-item px-2">
               <Link href="/">
                 <a className="nav-link">
@@ -61,6 +61,7 @@ function Navbar() {
           </button>
         </div>
         <Sidebar
+          as={Menu}
           animation="overlay"
           direction="left"
           inverted={sidebarConfig.inverted}

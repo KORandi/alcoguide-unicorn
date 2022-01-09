@@ -76,10 +76,12 @@ function ReadRecipePage({
                 <div className="rating">
                   <Rating
                     icon="star"
-                    defaultRating={rates.reduce((acc, rate) => acc + rate) / rates.length}
+                    defaultRating={
+                      rates.length ? rates.reduce((acc, rate) => acc + rate) / rates.length : 0
+                    }
                     maxRating={5}
                   />{' '}
-                  {rates?.length} ratings
+                  {rates.length} ratings
                 </div>
                 <div className="short-description">{shortDescription}</div>
               </div>
