@@ -8,6 +8,7 @@ const recipePropType = propTypes.shape({
   shortDescription: propTypes.string,
   ingredients: propTypes.arrayOf(ingredientPropType),
   image: propTypes.string,
+  rates: propTypes.arrayOf(propTypes.number),
 });
 
 export default recipePropType;

@@ -70,7 +70,7 @@ export const useRecipeActions = () => {
         await addRecipeFormData(formData);
       }
       await fetchRecipes();
-      router.push('/search');
+      router.back();
     }
   );
 

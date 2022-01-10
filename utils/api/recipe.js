@@ -53,3 +53,10 @@ export async function editRecipeFormData(id, recipe) {
   });
   return res;
 }
+
+export async function removeImage(id) {
+  const res = await fetch(`${host}/api/recipe/image/${id}`, {
+    method: 'DELETE',
+  });
+  return res;
+}

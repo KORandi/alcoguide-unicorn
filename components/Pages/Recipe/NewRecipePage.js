@@ -4,6 +4,7 @@ import propTypes from 'prop-types';
 import RichtextEditor from '../../RichtextEditor';
 import SearchInput from '../../Forms/Search/SearchInput';
 import { useRecipeActions } from '../../../utils/utils';
+import { removeImage } from '../../../utils/api/recipe';
 
 function NewRecipePage({ recipe }) {
   const {
@@ -52,6 +53,21 @@ function NewRecipePage({ recipe }) {
                 <span>Preview image</span>
                 <br />
                 <img src={previewImage} style={{ maxHeight: '150px' }} alt="Preview" />
+                {previewImage && recipe && (
+                  <>
+                    <br />
+                    <button
+                      onClick={async () => {
+                        await removeImage(recipe._id);
+                        setPreviewImage('');
+                      }}
+                      className="btn btn-danger my-2"
+                      type="button"
+                    >
+                      Remove image <i className="bi bi-file-earmark-x-fill" />
+                    </button>
+                  </>
+                )}
               </div>
             )}
             <div className="form-group pb-3">
@@ -128,7 +144,6 @@ function NewRecipePage({ recipe }) {
 }
 
 NewRecipePage.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
   recipe: propTypes.object,
 };
 

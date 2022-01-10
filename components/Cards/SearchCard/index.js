@@ -6,7 +6,7 @@ import { useAppSearch } from '../../../utils/utils';
 
 function SearchCard({
   ingredients,
-  recipe: { title, image, ingredients: queriedIngredients, shortDescription, _id: id },
+  recipe: { title, image, rates, ingredients: queriedIngredients, shortDescription, _id: id },
 }) {
   const { addIngredient, removeIngredient } = useAppSearch();
 
@@ -61,7 +61,14 @@ function SearchCard({
             <a className="btn btn-primary">Open recipe</a>
           </Link>
           <div style={{ maxHeight: '20px' }}>
-            <Rating icon="star" defaultRating={3} maxRating={5} disabled />
+            <Rating
+              icon="star"
+              defaultRating={
+                rates.length ? rates.reduce((acc, rate) => acc + rate) / rates.length : 0
+              }
+              maxRating={5}
+              disabled
+            />
           </div>
         </div>
       </div>
@@ -71,11 +78,20 @@ function SearchCard({
 
 SearchCard.propTypes = {
   ingredients: propTypes.arrayOf(propTypes.string),
-  recipe: recipePropType.isRequired,
+  recipe: recipePropType,
 };
 
 SearchCard.defaultProps = {
   ingredients: [],
+  recipe: {
+    _id: '',
+    title: '',
+    description: '',
+    shortDescription: '',
+    ingredients: [],
+    image: '',
+    rates: [],
+  },
 };
 
 export default SearchCard;

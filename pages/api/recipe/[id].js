@@ -29,7 +29,10 @@ export default apiHandler({
   put: async ({ id, req, res }) => {
     try {
       const { fields, files } = await parseRequest(req);
-      fields.image = await getImageLinkFromFiles(files);
+      const image = await getImageLinkFromFiles(files);
+      if (image) {
+        fields.image = image;
+      }
       setInputArray(fields, 'ingredients', fields.ingredients);
       setInputArray(fields, 'rates', fields.rates);
       const recipe = await Recipe.findByIdAndUpdate(id, fields, {

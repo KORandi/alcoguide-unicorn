@@ -16,6 +16,6 @@ export default (api) => async (req, res) => {
       res,
     });
   } catch (e) {
-    return setFailedRequest(res);
+    return setFailedRequest(res, 'Method endpoint is not defined');
   }
 };
