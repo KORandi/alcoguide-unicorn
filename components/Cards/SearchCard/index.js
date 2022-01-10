@@ -14,7 +14,7 @@ function SearchCard({
     ingredients.some((ingredient) => ingredient._id === selectedIngredient._id);
 
   return (
-    <div className="card">
+    <div className="card h-100">
       {image && <img src={image} alt={title} />}
       {!image && (
         <svg
@@ -56,6 +56,8 @@ function SearchCard({
           ))}
         </div>
         <p className="card-text">{shortDescription}</p>
+      </div>
+      <div className="card-footer">
         <div className="d-flex justify-content-between align-items-center">
           <Link href={`/recipe/${id}`}>
             <a className="btn btn-primary">Open recipe</a>
