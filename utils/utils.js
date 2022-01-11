@@ -176,6 +176,8 @@ export function useAppSearch() {
     addIngredient,
     removeIngredient,
     setIngredients,
+    ingredients,
+    recipes,
   };
 }
 
