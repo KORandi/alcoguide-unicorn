@@ -5,14 +5,7 @@ import ingredientPropType from '../../../utils/propTypes/ingredientPropType';
 import { useRecipeActions } from '../../../utils/utils';
 
 function ReadRecipePage({
-  _id,
-  title,
-  author,
-  rates,
-  shortDescription,
-  ingredients,
-  image,
-  description,
+  recipe: { _id, title, author, rates, shortDescription, ingredients, image, description },
 }) {
   const { removeRecipe, router } = useRecipeActions();
 
@@ -117,25 +110,29 @@ function ReadRecipePage({
 }
 
 ReadRecipePage.propTypes = {
-  _id: propTypes.string,
-  author: propTypes.string,
-  rates: propTypes.arrayOf(propTypes.number),
-  title: propTypes.string,
-  description: propTypes.string,
-  shortDescription: propTypes.string,
-  ingredients: propTypes.arrayOf(ingredientPropType),
-  image: propTypes.string,
+  recipe: propTypes.shape({
+    _id: propTypes.string,
+    author: propTypes.string,
+    rates: propTypes.arrayOf(propTypes.number),
+    title: propTypes.string,
+    description: propTypes.string,
+    shortDescription: propTypes.string,
+    ingredients: propTypes.arrayOf(ingredientPropType),
+    image: propTypes.string,
+  }),
 };
 
 ReadRecipePage.defaultProps = {
-  _id: '',
-  title: '',
-  author: '',
-  rates: [],
-  description: '',
-  shortDescription: '',
-  ingredients: [],
-  image: '',
+  recipe: {
+    _id: '',
+    title: '',
+    author: '',
+    rates: [],
+    description: '',
+    shortDescription: '',
+    ingredients: [],
+    image: '',
+  },
 };
 
 export default ReadRecipePage;

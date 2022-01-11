@@ -7,6 +7,7 @@ const AppContext = createContext();
 export function AppContextWrapper({ children }) {
   const [ingredients, setIngredients] = useState([]);
   const [recipes, setRecipes] = useState([]);
+  const [recipeMap, setRecipeMap] = useState(new Map());
 
   const fetchIngredients = async () => {
     const newIngredients = await getAllIngredients();
@@ -16,6 +17,11 @@ export function AppContextWrapper({ children }) {
   const fetchRecipes = async () => {
     const newRecipes = await getAllRecipes();
     setRecipes(newRecipes);
+    const newRecipeMap = new Map();
+    newRecipes.forEach((recipe) => {
+      newRecipeMap.set(recipe._id, recipe);
+    });
+    setRecipeMap(newRecipeMap);
   };
 
   useEffect(() => {
@@ -28,13 +34,12 @@ export function AppContextWrapper({ children }) {
       value={useMemo(
         () => ({
           ingredients,
-          setIngredients,
           recipes,
-          setRecipes,
+          recipeMap,
           fetchIngredients,
           fetchRecipes,
         }),
-        [ingredients, recipes]
+        [ingredients, recipes, recipeMap]
       )}
     >
       {children}

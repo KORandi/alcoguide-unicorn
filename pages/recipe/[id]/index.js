@@ -1,11 +1,14 @@
+import { useRouter } from 'next/router';
 import ReadRecipePage from '../../../components/Pages/Recipe/ReadRecipePage';
-import { useAppSearch } from '../../../utils/utils';
+import { useAppContext } from '../../../utils/context/state';
 
 function ReadRecipe() {
-  const { getRecipeDetail } = useAppSearch();
+  const { recipeMap } = useAppContext();
+  const { query } = useRouter();
+
   return (
     <div>
-      <ReadRecipePage {...getRecipeDetail()} />
+      <ReadRecipePage recipe={recipeMap.get(query.id)} />
     </div>
   );
 }

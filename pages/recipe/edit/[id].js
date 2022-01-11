@@ -1,13 +1,16 @@
+import { useRouter } from 'next/router';
 import NewRecipePage from '../../../components/Pages/Recipe/NewRecipePage';
-import { useAppSearch } from '../../../utils/utils';
+import { useAppContext } from '../../../utils/context/state';
 
 function EditRecipe() {
-  const { getRecipeDetail } = useAppSearch();
+  const { recipeMap } = useAppContext();
+  const { query } = useRouter();
+
   return (
     <div className="container" style={{ height: 'calc(100% - 50px)' }}>
       <div className="row h-100">
         <div className="col-12 h-100">
-          <NewRecipePage recipe={getRecipeDetail()} />
+          <NewRecipePage recipe={recipeMap.get(query.id)} />
         </div>
       </div>
     </div>
