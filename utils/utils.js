@@ -170,12 +170,15 @@ export function useAppSearch() {
     );
   };
 
+  const getRecipeDetail = () => recipes.find(({ _id }) => _id === query.id);
+
   return {
     queriedIngredients: getQueriedIngredients(),
     queriedRecipes: getQueriedRecipes(),
     addIngredient,
     removeIngredient,
     setIngredients,
+    getRecipeDetail,
     ingredients,
     recipes,
   };

@@ -1,6 +1,5 @@
 import { Controller } from 'react-hook-form';
 import { useEffect } from 'react';
-import propTypes from 'prop-types';
 import RichtextEditor from '../../RichtextEditor';
 import SearchInput from '../../Forms/Search/SearchInput';
 import { useRecipeActions } from '../../../utils/utils';
@@ -142,13 +141,5 @@ function NewRecipePage({ recipe }) {
     </>
   );
 }
-
-NewRecipePage.propTypes = {
-  recipe: propTypes.object,
-};
-
-NewRecipePage.defaultProps = {
-  recipe: null,
-};
 
 export default NewRecipePage;

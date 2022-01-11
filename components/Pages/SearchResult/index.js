@@ -35,11 +35,6 @@ function SearchResult({ ingredients, recipes }) {
               value={ingredients}
               onChange={(data) => setIngredients(data)}
             />
-            <div className="ms-3">
-              <button className="btn btn-primary" type="button">
-                Search
-              </button>
-            </div>
           </div>
           <div>
             <Link href="/recipe/new">

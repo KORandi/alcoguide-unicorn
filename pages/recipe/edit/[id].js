@@ -1,21 +1,17 @@
 import NewRecipePage from '../../../components/Pages/Recipe/NewRecipePage';
-import { getRecipe } from '../../../utils/api/recipe';
+import { useAppSearch } from '../../../utils/utils';
 
-function EditRecipe({ recipe }) {
+function EditRecipe() {
+  const { getRecipeDetail } = useAppSearch();
   return (
     <div className="container" style={{ height: 'calc(100% - 50px)' }}>
       <div className="row h-100">
         <div className="col-12 h-100">
-          <NewRecipePage recipe={recipe} />
+          <NewRecipePage recipe={getRecipeDetail()} />
         </div>
       </div>
     </div>
   );
 }
-
-EditRecipe.getInitialProps = async ({ query: { id } }) => {
-  const recipe = await getRecipe(id);
-  return { recipe };
-};
 
 export default EditRecipe;

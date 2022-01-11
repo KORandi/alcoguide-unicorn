@@ -1,22 +1,13 @@
 import ReadRecipePage from '../../../components/Pages/Recipe/ReadRecipePage';
-import recipePropType from '../../../utils/propTypes/recipePropType';
-import { getRecipe } from '../../../utils/api/recipe';
+import { useAppSearch } from '../../../utils/utils';
 
-function ReadRecipe({ recipe }) {
+function ReadRecipe() {
+  const { getRecipeDetail } = useAppSearch();
   return (
     <div>
-      <ReadRecipePage {...recipe} />
+      <ReadRecipePage {...getRecipeDetail()} />
     </div>
   );
 }
-
-ReadRecipe.propTypes = {
-  recipe: recipePropType.isRequired,
-};
-
-ReadRecipe.getInitialProps = async ({ query: { id } }) => {
-  const recipe = await getRecipe(id);
-  return { recipe };
-};
 
 export default ReadRecipe;
