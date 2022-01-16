@@ -1,5 +1,6 @@
 import { Controller } from 'react-hook-form';
 import { useEffect } from 'react';
+import { Icon, Label } from 'semantic-ui-react';
 import RichtextEditor from '../../RichtextEditor';
 import SearchInput from '../../Forms/Search/SearchInput';
 import { useRecipeActions } from '../../../utils/utils';
@@ -15,7 +16,10 @@ function NewRecipePage({ recipe }) {
     pourForm,
     handleSubmit,
     register,
+    watch,
   } = useRecipeActions();
+
+  const watchedIngredients = watch('ingredients');
 
   const setPreview = (event) => {
     const [file] = event.target.files;
@@ -115,9 +119,28 @@ function NewRecipePage({ recipe }) {
               name="ingredients"
               defaultValue={[]}
               render={({ field, fieldState }) => (
-                <SearchInput data={ingredients} {...field} {...fieldState} />
+                <SearchInput hiddenLabels data={ingredients} {...field} {...fieldState} />
               )}
             />
+          </div>
+          <div className="row py-3">
+            <div className="col-12 col-md-6">
+              <div className="row fw-bold">
+                <div className="col-3">Name</div>
+                <div className="col-9">Amount</div>
+              </div>
+              {watchedIngredients &&
+                watchedIngredients.map((el) => (
+                  <div className="row my-1">
+                    <div className="col-3 my-1">
+                      <Label key={el._id}>{el.name}</Label>
+                    </div>
+                    <div className="col-9 my-1">
+                      <input className="form-control" type="text" defaultValue={el.amount} />
+                    </div>
+                  </div>
+                ))}
+            </div>
           </div>
         </div>
         <div className="form-group pb-3">

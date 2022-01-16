@@ -16,7 +16,14 @@ export function getOrderPlacement(recipe, ingredients = []) {
 
 export const useRecipeActions = () => {
   const router = useRouter();
-  const { register, handleSubmit: handleSubmitForm, control, setValue, getValues } = useForm();
+  const {
+    register,
+    handleSubmit: handleSubmitForm,
+    control,
+    setValue,
+    getValues,
+    watch,
+  } = useForm();
   const { fetchRecipes, ingredients } = useAppContext();
   const [previewImage, setPreviewImage] = useState(null);
 
@@ -122,6 +129,8 @@ export const useRecipeActions = () => {
     handleSubmit,
     updateRating,
     calcAvgRating,
+    getValues,
+    watch,
   };
 };
 
