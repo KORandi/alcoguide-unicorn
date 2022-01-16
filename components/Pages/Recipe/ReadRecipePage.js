@@ -1,13 +1,13 @@
 /* eslint-disable react/no-danger */
-import { Rating } from 'semantic-ui-react';
 import propTypes from 'prop-types';
+import { Rating } from 'semantic-ui-react';
 import ingredientPropType from '../../../utils/propTypes/ingredientPropType';
 import { useRecipeActions } from '../../../utils/utils';
 
 function ReadRecipePage({
   recipe: { _id, title, author, rates, shortDescription, ingredients, image, description },
 }) {
-  const { removeRecipe, router } = useRecipeActions();
+  const { removeRecipe, calcAvgRating, updateRating, router } = useRecipeActions();
 
   return (
     <>
@@ -67,14 +67,19 @@ function ReadRecipePage({
                   <span>{author}</span>
                 </div>
                 <div className="rating">
-                  <Rating
-                    icon="star"
-                    defaultRating={
-                      rates.length ? rates.reduce((acc, rate) => acc + rate) / rates.length : 0
-                    }
-                    maxRating={5}
-                  />{' '}
-                  {rates.length} ratings
+                  {Array.isArray(rates) && (
+                    <>
+                      <Rating
+                        icon="star"
+                        onRate={(e, { rating }) => {
+                          updateRating(_id, rating);
+                        }}
+                        defaultRating={calcAvgRating(rates)}
+                        maxRating={5}
+                      />{' '}
+                      {rates?.length ?? 0} ratings
+                    </>
+                  )}
                 </div>
                 <div className="short-description">{shortDescription}</div>
               </div>
@@ -127,7 +132,7 @@ ReadRecipePage.defaultProps = {
     _id: '',
     title: '',
     author: '',
-    rates: [],
+    rates: null,
     description: '',
     shortDescription: '',
     ingredients: [],

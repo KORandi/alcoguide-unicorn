@@ -2,13 +2,14 @@ import propTypes from 'prop-types';
 import { Label, Rating } from 'semantic-ui-react';
 import Link from 'next/link';
 import recipePropType from '../../../utils/propTypes/recipePropType';
-import { useAppSearch } from '../../../utils/utils';
+import { useAppSearch, useRecipeActions } from '../../../utils/utils';
 
 function SearchCard({
   ingredients,
   recipe: { title, image, rates, ingredients: queriedIngredients, shortDescription, _id: id },
 }) {
   const { addIngredient, removeIngredient } = useAppSearch();
+  const { calcAvgRating } = useRecipeActions();
 
   const hasIngredient = (selectedIngredient) =>
     ingredients.some((ingredient) => ingredient._id === selectedIngredient._id);
@@ -63,14 +64,7 @@ function SearchCard({
             <a className="btn btn-primary">Open recipe</a>
           </Link>
           <div style={{ maxHeight: '20px' }}>
-            <Rating
-              icon="star"
-              defaultRating={
-                rates.length ? rates.reduce((acc, rate) => acc + rate) / rates.length : 0
-              }
-              maxRating={5}
-              disabled
-            />
+            <Rating icon="star" defaultRating={calcAvgRating(rates)} maxRating={5} disabled />
           </div>
         </div>
       </div>

@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
-import { addRecipeFormData, deleteRecipe, editRecipeFormData } from './api/recipe';
+import { addRecipeFormData, deleteRecipe, editRecipeFormData, rateRecipe } from './api/recipe';
 import { useAppContext } from './context/state';
 
 export function getOrderPlacement(recipe, ingredients = []) {
@@ -98,6 +98,18 @@ export const useRecipeActions = () => {
     router.push('/search');
   };
 
+  const updateRating = async (id, value) => {
+    await rateRecipe(id, value);
+    await fetchRecipes();
+  };
+
+  const calcAvgRating = (rates) => {
+    if (!rates?.length) {
+      return 0;
+    }
+    return Math.round(rates.reduce((acc, rate) => acc + rate) / rates.length);
+  };
+
   return {
     router,
     previewImage,
@@ -108,6 +120,8 @@ export const useRecipeActions = () => {
     pourForm,
     register,
     handleSubmit,
+    updateRating,
+    calcAvgRating,
   };
 };
 

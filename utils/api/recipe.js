@@ -62,9 +62,13 @@ export async function removeImage(id) {
 }
 
 export async function rateRecipe(id, value) {
-  const res = await fetch(`${host}/api/recipe/image/${id}`, {
+  const res = await fetch(`${host}/api/recipe/rate/${id}`, {
     method: 'POST',
-    body: { value },
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ value }),
   });
   return res;
 }
