@@ -60,3 +60,11 @@ export async function removeImage(id) {
   });
   return res;
 }
+
+export async function rateRecipe(id, value) {
+  const res = await fetch(`${host}/api/recipe/image/${id}`, {
+    method: 'POST',
+    body: { value },
+  });
+  return res;
+}
