@@ -112,19 +112,21 @@ function NewRecipePage({ recipe }) {
           />
         </div>
         <div className="form-group pb-3">
-          <label htmlFor="ingredients">Ingredients</label>
-          <div>
-            <Controller
-              control={control}
-              name="ingredients"
-              defaultValue={[]}
-              render={({ field, fieldState }) => (
-                <SearchInput hiddenLabels data={ingredients} {...field} {...fieldState} />
-              )}
-            />
-          </div>
           <div className="row py-3">
-            <div className="col-12 col-md-6">
+            <div className="col-md-6">
+              <label htmlFor="ingredients">Ingredients</label>
+              <div>
+                <Controller
+                  control={control}
+                  name="ingredients"
+                  defaultValue={[]}
+                  render={({ field, fieldState }) => (
+                    <SearchInput hiddenLabels data={ingredients} {...field} {...fieldState} />
+                  )}
+                />
+              </div>
+            </div>
+            <div className="col-md-6">
               <div className="row fw-bold">
                 <div className="col-3">Name</div>
                 <div className="col-9">Amount</div>
