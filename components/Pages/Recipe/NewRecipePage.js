@@ -5,6 +5,7 @@ import RichtextEditor from '../../RichtextEditor';
 import SearchInput from '../../Forms/Search/SearchInput';
 import { useRecipeActions } from '../../../utils/utils';
 import { removeImage } from '../../../utils/api/recipe';
+import SearchInputTable from '../../Forms/Search/SearchInputTable';
 
 function NewRecipePage({ recipe }) {
   const {
@@ -112,38 +113,14 @@ function NewRecipePage({ recipe }) {
           />
         </div>
         <div className="form-group pb-3">
-          <div className="row py-3">
-            <div className="col-md-6">
-              <label htmlFor="ingredients">Ingredients</label>
-              <div>
-                <Controller
-                  control={control}
-                  name="ingredients"
-                  defaultValue={[]}
-                  render={({ field, fieldState }) => (
-                    <SearchInput hiddenLabels data={ingredients} {...field} {...fieldState} />
-                  )}
-                />
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="row fw-bold">
-                <div className="col-3">Name</div>
-                <div className="col-9">Amount</div>
-              </div>
-              {watchedIngredients &&
-                watchedIngredients.map((el) => (
-                  <div className="row my-1">
-                    <div className="col-3 my-1">
-                      <Label key={el._id}>{el.name}</Label>
-                    </div>
-                    <div className="col-9 my-1">
-                      <input className="form-control" type="text" defaultValue={el.amount} />
-                    </div>
-                  </div>
-                ))}
-            </div>
-          </div>
+          <Controller
+            control={control}
+            name="ingredients"
+            defaultValue={[]}
+            render={({ field, fieldState }) => (
+              <SearchInputTable data={ingredients} {...field} {...fieldState} />
+            )}
+          />
         </div>
         <div className="form-group pb-3">
           <label htmlFor="description">Method</label>

@@ -58,6 +58,9 @@ export const useRecipeActions = () => {
       description,
       author,
     }) => {
+      console.log(dataIngredients);
+      return;
+
       const formData = new FormData();
       if (_id) {
         formData.append('id', _id);
