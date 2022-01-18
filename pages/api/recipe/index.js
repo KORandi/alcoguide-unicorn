@@ -6,7 +6,6 @@ import {
   setFailedRequest,
   setInputArray,
   setSuccessfulRequest,
-  uploadFile,
 } from '../../../utils/apiUtils';
 import RecipeSchema from '../../../utils/models/Recipe';
 
