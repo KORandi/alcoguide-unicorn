@@ -1,11 +1,11 @@
 import classNames from 'classnames';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useImperativeHandle, useState } from 'react';
 import { Icon, Label } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import ingredientPropType from '../../../utils/propTypes/ingredientPropType';
 
 const SearchInput = React.forwardRef(
-  ({ onChange, value: defaultValue, data, hiddenLabels }, ref) => {
+  ({ onChange, onKeyDown, value: defaultValue, data, hiddenLabels }, ref) => {
     const [inputValue, setInputValue] = useState('');
     const [showSearchResult, setShowSearchResult] = useState(false);
     const [value, setValue] = useState(defaultValue);
@@ -29,6 +29,12 @@ const SearchInput = React.forwardRef(
       onChange(newValue);
     };
 
+    useImperativeHandle(ref, () => ({
+      clearInput() {
+        setInputValue('');
+      },
+    }));
+
     return (
       <div>
         <div className="autocomplete inner-addon left-addon">
@@ -42,6 +48,12 @@ const SearchInput = React.forwardRef(
             }}
             onChange={(event) => {
               setInputValue(event.target.value);
+            }}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                setInputValue('');
+              }
+              onKeyDown(event);
             }}
             value={inputValue}
             ref={ref}
@@ -98,6 +110,7 @@ const SearchInput = React.forwardRef(
 
 SearchInput.propTypes = {
   onChange: PropTypes.func,
+  onKeyDown: PropTypes.func,
   value: PropTypes.arrayOf(ingredientPropType),
   data: PropTypes.arrayOf(ingredientPropType),
   hiddenLabels: PropTypes.bool,
@@ -105,6 +118,7 @@ SearchInput.propTypes = {
 
 SearchInput.defaultProps = {
   onChange: () => {},
+  onKeyDown: () => {},
   value: [],
   data: [],
   hiddenLabels: false,

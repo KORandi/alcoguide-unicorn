@@ -34,6 +34,6 @@ export async function addIngredient(recipe) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(recipe),
-  });
+  }).then((response) => response.json());
   return res;
 }

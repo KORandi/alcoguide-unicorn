@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Icon, Label } from 'semantic-ui-react';
+import { addIngredient } from '../../../utils/api/ingredient';
+import { useAppContext } from '../../../utils/context/state';
 import SearchInput from './SearchInput';
 
 const SearchInputTable = React.forwardRef(
   ({ data, fieldState, value: defaultValue, onChange }, ref) => {
     const [value, setValue] = useState([]);
+    const { fetchIngredients } = useAppContext();
 
     useEffect(() => {
       setValue(defaultValue);
@@ -30,6 +33,22 @@ const SearchInputTable = React.forwardRef(
       onChange([...value]);
     };
 
+    const onEnterPress = async (event) => {
+      event.preventDefault();
+      const newValue = event.target.value;
+      if (newValue) {
+        const { data: resultData } = await addIngredient({ name: newValue });
+        await fetchIngredients();
+        setValue([
+          ...value,
+          {
+            name: resultData.name,
+            _id: resultData._id,
+          },
+        ]);
+      }
+    };
+
     return (
       <div className="row py-3">
         <div className="col-md-6">
@@ -40,6 +59,11 @@ const SearchInputTable = React.forwardRef(
               data={data}
               value={value}
               onChange={handleOnChangeSearchInput}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter') {
+                  onEnterPress(event);
+                }
+              }}
               ref={ref}
             />
           </div>
