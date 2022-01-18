@@ -1,7 +1,6 @@
 import propTypes from 'prop-types';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-import dynamic from 'next/dynamic';
 import ingredientPropType from '../../../utils/propTypes/ingredientPropType';
 import recipePropType from '../../../utils/propTypes/recipePropType';
 import SearchCard from '../../Cards/SearchCard';
