@@ -34,7 +34,6 @@ export default apiHandler({
         fields.image = image;
       }
       setInputArray(fields, 'ingredients', fields.ingredients);
-      setInputArray(fields, 'rates', fields.rates);
       const recipe = await Recipe.findByIdAndUpdate(id, fields, {
         new: true,
         runValidators: true,

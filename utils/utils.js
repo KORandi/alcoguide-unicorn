@@ -68,7 +68,6 @@ export const useRecipeActions = () => {
       formData.append('title', title);
       formData.append('shortDescription', shortDescription);
       formData.append('ingredients', JSON.stringify(dataIngredients));
-      formData.append('rates', JSON.stringify([1, 2, 3, 4, 5]));
       formData.append('description', description);
       formData.append('author', author);
       if (_id) {
