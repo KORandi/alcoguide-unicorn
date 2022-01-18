@@ -1,3 +1,4 @@
+import propTypes from 'prop-types';
 import { useState, createContext, useContext, useMemo, useEffect } from 'react';
 import { getAllIngredients } from '../api/ingredient';
 import { getAllRecipes } from '../api/recipe';
@@ -48,6 +49,10 @@ export function AppContextWrapper({ children }) {
     </AppContext.Provider>
   );
 }
+
+AppContextWrapper.propTypes = {
+  children: propTypes.node.isRequired,
+};
 
 export function useAppContext() {
   return useContext(AppContext);

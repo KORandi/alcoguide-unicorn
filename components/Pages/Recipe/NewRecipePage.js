@@ -4,6 +4,7 @@ import RichtextEditor from '../../RichtextEditor';
 import { useRecipeActions } from '../../../utils/utils';
 import { removeImage } from '../../../utils/api/recipe';
 import SearchInputTable from '../../Forms/Search/SearchInputTable';
+import recipePropType from '../../../utils/propTypes/recipePropType';
 
 function NewRecipePage({ recipe }) {
   const {
@@ -138,5 +139,9 @@ function NewRecipePage({ recipe }) {
     </>
   );
 }
+
+NewRecipePage.propTypes = {
+  recipe: recipePropType.isRequired,
+};
 
 export default NewRecipePage;
