@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import { IngredientSchema } from './Ingredient';
 
 const RecipeSchema = new mongoose.Schema({
   image: {
@@ -17,7 +16,12 @@ const RecipeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  ingredients: [IngredientSchema],
+  ingredients: [
+    {
+      name: { type: String, required: true, unique: true, sparse: true },
+      amount: { type: String },
+    },
+  ],
   rates: [Number],
   author: {
     type: String,

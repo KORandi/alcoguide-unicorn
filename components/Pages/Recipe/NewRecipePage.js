@@ -1,8 +1,6 @@
 import { Controller } from 'react-hook-form';
 import { useEffect } from 'react';
-import { Icon, Label } from 'semantic-ui-react';
 import RichtextEditor from '../../RichtextEditor';
-import SearchInput from '../../Forms/Search/SearchInput';
 import { useRecipeActions } from '../../../utils/utils';
 import { removeImage } from '../../../utils/api/recipe';
 import SearchInputTable from '../../Forms/Search/SearchInputTable';
@@ -17,10 +15,7 @@ function NewRecipePage({ recipe }) {
     pourForm,
     handleSubmit,
     register,
-    watch,
   } = useRecipeActions();
-
-  const watchedIngredients = watch('ingredients');
 
   const setPreview = (event) => {
     const [file] = event.target.files;
