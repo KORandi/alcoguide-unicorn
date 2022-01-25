@@ -44,6 +44,9 @@ export async function getImageLinkFromFiles(files) {
 }
 
 export function setInputArray(fields, keyName, input) {
+  if (!input) {
+    return;
+  }
   const parsedData = JSON.parse(input);
   if (parsedData.length === 0) {
     // eslint-disable-next-line no-param-reassign
