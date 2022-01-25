@@ -28,7 +28,6 @@ export default apiHandler({
       const { fields, files } = await parseRequest(req);
       fields.image = await getImageLinkFromFiles(files);
       setInputArray(fields, 'ingredients', fields.ingredients);
-      setInputArray(fields, 'rates', fields.rates);
       const newRecipe = await RecipeSchema.create(fields);
       return setSuccessfulRequest(res, newRecipe);
     } catch (error) {
