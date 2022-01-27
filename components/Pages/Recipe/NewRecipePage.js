@@ -141,7 +141,11 @@ function NewRecipePage({ recipe }) {
 }
 
 NewRecipePage.propTypes = {
-  recipe: recipePropType.isRequired,
+  recipe: recipePropType,
+};
+
+NewRecipePage.defaultProps = {
+  recipe: null,
 };
 
 export default NewRecipePage;

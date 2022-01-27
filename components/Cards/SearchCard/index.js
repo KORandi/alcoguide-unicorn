@@ -3,6 +3,7 @@ import { Label, Rating } from 'semantic-ui-react';
 import Link from 'next/link';
 import recipePropType from '../../../utils/propTypes/recipePropType';
 import { useAppSearch, useRecipeActions } from '../../../utils/utils';
+import ingredientPropType from '../../../utils/propTypes/ingredientPropType';
 
 function SearchCard({
   ingredients,
@@ -73,7 +74,7 @@ function SearchCard({
 }
 
 SearchCard.propTypes = {
-  ingredients: propTypes.arrayOf(propTypes.string),
+  ingredients: propTypes.arrayOf(ingredientPropType),
   recipe: recipePropType,
 };
 

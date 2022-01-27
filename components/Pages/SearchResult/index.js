@@ -35,7 +35,7 @@ function SearchResult({ ingredients, recipes }) {
               onChange={(data) => setIngredients(data)}
             />
           </div>
-          <div>
+          <div className="py-2">
             <Link href="/recipe/new">
               <button className="btn btn-primary d-block ms-auto" type="button">
                 Add recipe <i className="bi bi-plus-circle" />
