@@ -31,6 +31,7 @@
     "no-underscore-dangle": "off",
     "jsx-a11y/label-has-associated-control": "off",
     "new-cap": "off",
-    "object-curly-newline": "off"
+    "object-curly-newline": "off",
+    "linebreak-style": "off"
   }
 }
