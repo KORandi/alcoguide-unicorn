@@ -1,6 +1,5 @@
 import dbConnect from '../../../utils/dbConnect';
 import apiHandler from '../../../utils/apiHandler';
-import Recipe from '../../../utils/models/Recipe';
 import {
   parseRequest,
   setFailedRequest,
@@ -8,6 +7,7 @@ import {
   getImageLinkFromFiles,
   setInputArray,
 } from '../../../utils/apiUtils';
+import { getById, getByIdAndUpdate, deleteById } from '../../../utils/repository/RecipeRepository';
 
 dbConnect();
 
@@ -20,37 +20,36 @@ export const config = {
 
 export default apiHandler({
   get: async ({ id, res }) => {
-    const recipe = await Recipe.findById(id);
-    if (!recipe) {
-      return setFailedRequest(res);
-    }
-    return setSuccessfulRequest(res, recipe);
-  },
-  put: async ({ id, req, res }) => {
     try {
-      const { fields, files } = await parseRequest(req);
-      const image = await getImageLinkFromFiles(files);
-      if (image) {
-        fields.image = image;
-      }
-      setInputArray(fields, 'ingredients', fields.ingredients);
-      const recipe = await Recipe.findByIdAndUpdate(id, fields, {
-        new: true,
-        runValidators: true,
-      });
-      if (!recipe) {
-        return setFailedRequest(res);
-      }
-      return setSuccessfulRequest(res, recipe);
+      return setSuccessfulRequest(res, await getById(id));
     } catch (error) {
       return setFailedRequest(res, error);
     }
   },
   delete: async ({ id, res }) => {
-    const deletedNote = await Recipe.deleteOne({ _id: id });
-    if (!deletedNote) {
-      return setFailedRequest(res);
+    try {
+      return setSuccessfulRequest(res, await deleteById({ _id: id }));
+    } catch (error) {
+      return setFailedRequest(res, error);
     }
-    return setSuccessfulRequest(res, deletedNote);
+  },
+  put: async ({ id, req, res }) => {
+    try {
+      const {
+        fields,
+        fields: { ingredients },
+        files,
+      } = await parseRequest(req);
+
+      const image = await getImageLinkFromFiles(files);
+      if (image) {
+        fields.image = image;
+      }
+
+      setInputArray(fields, 'ingredients', ingredients);
+      return setSuccessfulRequest(res, await getByIdAndUpdate(id, fields));
+    } catch (error) {
+      return setFailedRequest(res, error);
+    }
   },
 });

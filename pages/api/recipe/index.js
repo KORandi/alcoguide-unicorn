@@ -8,6 +8,7 @@ import {
   setSuccessfulRequest,
 } from '../../../utils/apiUtils';
 import RecipeSchema from '../../../utils/models/Recipe';
+import { getAll, insert } from '../../../utils/repository/RecipeRepository';
 
 // set bodyparser
 export const config = {
@@ -20,16 +21,18 @@ dbConnect();
 
 export default apiHandler({
   get: async ({ res }) => {
-    const recipes = await RecipeSchema.find({});
-    setSuccessfulRequest(res, recipes);
+    try {
+      return setSuccessfulRequest(res, await getAll());
+    } catch (error) {
+      return setFailedRequest(res, error);
+    }
   },
   post: async ({ res, req }) => {
     try {
       const { fields, files } = await parseRequest(req);
       fields.image = await getImageLinkFromFiles(files);
       setInputArray(fields, 'ingredients', fields.ingredients);
-      const newRecipe = await RecipeSchema.create(fields);
-      return setSuccessfulRequest(res, newRecipe);
+      return setSuccessfulRequest(res, await insert(fields));
     } catch (error) {
       return setFailedRequest(res, error);
     }

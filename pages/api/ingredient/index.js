@@ -1,22 +1,27 @@
 import dbConnect from '../../../utils/dbConnect';
 import apiHandler from '../../../utils/apiHandler';
-import { setSuccessfulRequest } from '../../../utils/apiUtils';
-import Ingredient from '../../../utils/models/Ingredient';
+import { setFailedRequest, setSuccessfulRequest } from '../../../utils/apiUtils';
+import { getAll, findByIdList, insert } from '../../../utils/repository/IngredientRepository';
 
 dbConnect();
 
 export default apiHandler({
   get: async ({ res, query: { ingredients: queryIngredients } }) => {
-    if (queryIngredients) {
-      const ingredients = await Ingredient.find({ _id: { $in: queryIngredients.split(',') } });
-      setSuccessfulRequest(res, ingredients);
-    } else {
-      const ingredients = await Ingredient.find({});
-      setSuccessfulRequest(res, ingredients);
+    try {
+      if (queryIngredients) {
+        setSuccessfulRequest(res, await findByIdList(queryIngredients.split(',')));
+      } else {
+        setSuccessfulRequest(res, await getAll());
+      }
+    } catch (error) {
+      setFailedRequest(res, error);
     }
   },
   post: async ({ res, body }) => {
-    const note = await Ingredient.create(body);
-    setSuccessfulRequest(res, note);
+    try {
+      setSuccessfulRequest(res, await insert(body));
+    } catch (error) {
+      setFailedRequest(res, error);
+    }
   },
 });
