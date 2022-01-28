@@ -57,7 +57,7 @@ export async function getAll() {
  */
 export async function insert(fields) {
   try {
-    return new RecipeDao(fields);
+    return new RecipeDao(await Recipe.create(fields));
   } catch (error) {
     throw new Error(`Something wrong happend during creation: ${error}`);
   }

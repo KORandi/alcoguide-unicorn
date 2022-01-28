@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useEffect } from 'react/cjs/react.development';
+import { useEffect } from 'react';
 import NewRecipePage from '../../../components/Pages/Recipe/NewRecipePage';
 import { useAppContext } from '../../../utils/context/state';
 

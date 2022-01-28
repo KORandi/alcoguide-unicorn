@@ -7,7 +7,6 @@ import {
   setInputArray,
   setSuccessfulRequest,
 } from '../../../utils/apiUtils';
-import RecipeSchema from '../../../utils/models/Recipe';
 import { getAll, insert } from '../../../utils/repository/RecipeRepository';
 
 // set bodyparser

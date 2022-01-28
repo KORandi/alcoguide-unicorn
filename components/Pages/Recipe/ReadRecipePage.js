@@ -83,7 +83,7 @@ function ReadRecipePage({
                   <span>{author}</span>
                 </div>
                 <div className="rating">
-                  {Array.isArray(rates) && (
+                  {Array.isArray(rates) && user !== '3' && (
                     <>
                       <Rating
                         icon="star"
@@ -92,6 +92,18 @@ function ReadRecipePage({
                         }}
                         defaultRating={calcAvgRating(rates)}
                         maxRating={5}
+                        disabled={user === '3'}
+                      />{' '}
+                      {rates?.length ?? 0} ratings
+                    </>
+                  )}
+                  {Array.isArray(rates) && user === '3' && (
+                    <>
+                      <Rating
+                        icon="star"
+                        defaultRating={calcAvgRating(rates)}
+                        maxRating={5}
+                        disabled
                       />{' '}
                       {rates?.length ?? 0} ratings
                     </>

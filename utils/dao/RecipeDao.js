@@ -1,5 +1,6 @@
 export default class RecipeDao {
   constructor({
+    _id,
     image,
     title,
     shortDescription,
@@ -9,6 +10,7 @@ export default class RecipeDao {
     author,
     createdBy,
   }) {
+    this._id = _id;
     this.image = image;
     this.title = title;
     this.shortDescription = shortDescription;
