@@ -16,6 +16,7 @@ function NewRecipePage({ recipe }) {
     pourForm,
     handleSubmit,
     register,
+    formState: { errors },
   } = useRecipeActions();
 
   const setPreview = (event) => {
@@ -91,10 +92,17 @@ function NewRecipePage({ recipe }) {
                 type="text"
                 id="title"
               />
+              {errors.title && <p className="text-danger text-danger">Fill this field</p>}
             </div>
             <div className="form-group pb-3">
               <label htmlFor="author">Author</label>
-              <input {...register('author')} className="form-control" type="text" id="author" />
+              <input
+                {...register('author', { required: true })}
+                className="form-control"
+                type="text"
+                id="author"
+              />
+              {errors.author && <p className="text-danger">Fill this field</p>}
             </div>
           </div>
         </div>
@@ -107,6 +115,7 @@ function NewRecipePage({ recipe }) {
             type="text"
             id="short-description"
           />
+          {errors.shortDescription && <p className="text-danger">Fill this field</p>}
         </div>
         <div className="form-group pb-3">
           <Controller
@@ -123,9 +132,13 @@ function NewRecipePage({ recipe }) {
           <Controller
             name="description"
             defaultValue=""
+            rules={{ required: true }}
             control={control}
-            render={({ field: { value, onChange, onBlur, ref } }) => (
-              <RichtextEditor value={value} ref={ref} onChange={onChange} onBlur={onBlur} />
+            render={({ field: { value, onChange, onBlur, ref }, fieldState: { invalid } }) => (
+              <>
+                <RichtextEditor value={value} ref={ref} onChange={onChange} onBlur={onBlur} />
+                {invalid && <p className="text-danger">Fill this field</p>}
+              </>
             )}
           />
         </div>

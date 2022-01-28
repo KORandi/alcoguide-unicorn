@@ -33,6 +33,7 @@ export default apiHandler({
       setInputArray(fields, 'ingredients', fields.ingredients);
       return setSuccessfulRequest(res, await insert(fields));
     } catch (error) {
+      console.log(error);
       return setFailedRequest(res, error);
     }
   },

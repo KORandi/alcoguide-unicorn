@@ -19,6 +19,7 @@ export const useRecipeActions = () => {
   const {
     register,
     handleSubmit: handleSubmitForm,
+    formState,
     control,
     setValue,
     getValues,
@@ -71,13 +72,14 @@ export const useRecipeActions = () => {
       formData.append('description', description);
       formData.append('author', author);
       formData.append('createdBy', user);
+      let newRecipe;
       if (_id) {
-        await editRecipeFormData(_id, formData);
+        newRecipe = await editRecipeFormData(_id, formData);
       } else {
-        await addRecipeFormData(formData);
+        newRecipe = await addRecipeFormData(formData);
       }
       await fetchRecipes();
-      router.back();
+      router.push(`/recipe/${newRecipe._id}`);
     }
   );
 
@@ -122,6 +124,7 @@ export const useRecipeActions = () => {
     previewImage,
     control,
     ingredients,
+    formState,
     removeRecipe,
     setPreviewImage,
     pourForm,

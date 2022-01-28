@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 
 export function setFailedRequest(res, msg) {
-  return res.status(400).json({ success: false, msg });
+  return res.status(400).json({ success: false, msg: msg?.message ?? msg });
 }
 
 export function setSuccessfulRequest(res, data) {
