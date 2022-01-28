@@ -8,11 +8,9 @@ import { getOrderPlacement, useAppSearch } from '../../../utils/utils';
 import SearchInput from '../../Forms/Search/SearchInput';
 import { useAppContext } from '../../../utils/context/state';
 
-// const masonry = dynamic(() => import('masonry-layout/masonry'), { ssr: false });
-
 function SearchResult({ ingredients, recipes }) {
   const [modifiedRecipes, setModifiedRecipes] = useState([]);
-  const { ingredients: appIngredients } = useAppContext();
+  const { ingredients: appIngredients, user } = useAppContext();
   const { setIngredients } = useAppSearch();
   const rowRef = useRef(null);
 
@@ -35,13 +33,15 @@ function SearchResult({ ingredients, recipes }) {
               onChange={(data) => setIngredients(data)}
             />
           </div>
-          <div className="py-2">
-            <Link href="/recipe/new">
-              <button className="btn btn-primary d-block ms-auto" type="button">
-                Add recipe <i className="bi bi-plus-circle" />
-              </button>
-            </Link>
-          </div>
+          {user !== '3' && (
+            <div className="py-2">
+              <Link href="/recipe/new">
+                <button className="btn btn-primary d-block ms-auto" type="button">
+                  Add recipe <i className="bi bi-plus-circle" />
+                </button>
+              </Link>
+            </div>
+          )}
         </div>
       </div>
       <div className="row" ref={rowRef}>

@@ -1,13 +1,25 @@
 /* eslint-disable react/no-danger */
 import propTypes from 'prop-types';
 import { Rating } from 'semantic-ui-react';
+import { useAppContext } from '../../../utils/context/state';
 import ingredientPropType from '../../../utils/propTypes/ingredientPropType';
 import { useRecipeActions } from '../../../utils/utils';
 
 function ReadRecipePage({
-  recipe: { _id, title, author, rates, shortDescription, ingredients, image, description },
+  recipe: {
+    _id,
+    title,
+    author,
+    rates,
+    shortDescription,
+    ingredients,
+    image,
+    description,
+    createdBy,
+  },
 }) {
   const { removeRecipe, calcAvgRating, updateRating, router } = useRecipeActions();
+  const { user } = useAppContext();
 
   return (
     <>
@@ -15,20 +27,24 @@ function ReadRecipePage({
         <div className="row">
           <div className="col-12 d-flex justify-content-end">
             <div>
-              <button
-                onClick={() => removeRecipe(_id)}
-                className="btn btn-danger me-3 my-1"
-                type="button"
-              >
-                Remove recipe <i className="bi bi-eraser-fill" />
-              </button>
-              <button
-                onClick={() => router.push(`/recipe/edit/${_id}`)}
-                className="btn btn-secondary me-3 my-1"
-                type="button"
-              >
-                Edit recipe <i className="bi bi-pencil-fill" />
-              </button>
+              {user !== '3' && (createdBy === user || user === '0') && (
+                <>
+                  <button
+                    onClick={() => removeRecipe(_id)}
+                    className="btn btn-danger me-3 my-1"
+                    type="button"
+                  >
+                    Remove recipe <i className="bi bi-eraser-fill" />
+                  </button>
+                  <button
+                    onClick={() => router.push(`/recipe/edit/${_id}`)}
+                    className="btn btn-secondary me-3 my-1"
+                    type="button"
+                  >
+                    Edit recipe <i className="bi bi-pencil-fill" />
+                  </button>
+                </>
+              )}
               <button onClick={() => router.back()} className="btn btn-primary my-1" type="button">
                 Go back <i className="bi bi-arrow-return-left" />
               </button>
@@ -124,6 +140,7 @@ ReadRecipePage.propTypes = {
     shortDescription: propTypes.string,
     ingredients: propTypes.arrayOf(ingredientPropType),
     image: propTypes.string,
+    createdBy: propTypes.string,
   }),
 };
 
@@ -137,6 +154,7 @@ ReadRecipePage.defaultProps = {
     shortDescription: '',
     ingredients: [],
     image: '',
+    createdBy: '3',
   },
 };
 

@@ -9,6 +9,7 @@ export function AppContextWrapper({ children }) {
   const [ingredients, setIngredients] = useState([]);
   const [recipes, setRecipes] = useState([]);
   const [recipeMap, setRecipeMap] = useState(new Map());
+  const [user, setUser] = useState('0');
 
   const fetchIngredients = async () => {
     const newIngredients = await getAllIngredients();
@@ -39,10 +40,12 @@ export function AppContextWrapper({ children }) {
           ingredients,
           recipes,
           recipeMap,
+          user,
           fetchIngredients,
           fetchRecipes,
+          setUser,
         }),
-        [ingredients, recipes, recipeMap]
+        [ingredients, recipes, recipeMap, user]
       )}
     >
       {children}

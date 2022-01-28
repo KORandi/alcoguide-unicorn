@@ -28,6 +28,7 @@ const RecipeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  createdBy: { type: String },
 });
 
 export default mongoose.models.Recipe || mongoose.model('Recipe', RecipeSchema);

@@ -24,7 +24,7 @@ export const useRecipeActions = () => {
     getValues,
     watch,
   } = useForm();
-  const { fetchRecipes, ingredients } = useAppContext();
+  const { fetchRecipes, ingredients, user } = useAppContext();
   const [previewImage, setPreviewImage] = useState(null);
 
   const pourForm = (recipe) => {
@@ -70,6 +70,7 @@ export const useRecipeActions = () => {
       formData.append('ingredients', JSON.stringify(dataIngredients));
       formData.append('description', description);
       formData.append('author', author);
+      formData.append('createdBy', user);
       if (_id) {
         await editRecipeFormData(_id, formData);
       } else {

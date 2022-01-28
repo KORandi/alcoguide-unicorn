@@ -4,9 +4,11 @@ import { useState } from 'react';
 import { Icon, Menu } from 'semantic-ui-react';
 import Sidebar from 'semantic-ui-react/dist/commonjs/modules/Sidebar/Sidebar';
 import { USER_LIST } from '../../utils/constants';
+import { useAppContext } from '../../utils/context/state';
 
 function Navbar() {
   const [visible, setVisible] = useState(false);
+  const { user, setUser } = useAppContext();
   const sidebarConfig = {
     vertical: true,
     inverted: true,
@@ -37,10 +39,17 @@ function Navbar() {
             </li>
           </ul>
           <div className="d-flex align-items-center">
-            <select defaultValue={0} className="form-select" aria-label="User select">
-              {USER_LIST.map((user, key) => (
-                <option value={key} key={user}>
-                  {user}
+            <select
+              onChange={(event) => {
+                setUser(event.target.value);
+              }}
+              defaultValue={user}
+              className="form-select"
+              aria-label="User select"
+            >
+              {USER_LIST.map((userEl, key) => (
+                <option value={key} key={userEl}>
+                  {userEl}
                 </option>
               ))}
             </select>
@@ -88,11 +97,19 @@ function Navbar() {
               </Menu.Item>
             </Link>
             <Menu.Item className="d-flex justify-content-end" as="a">
-              <select defaultValue={0} className="form-select" aria-label="Default select example">
-                <option value={0}>Admin</option>
-                <option value={1}>User one</option>
-                <option value={2}>User two</option>
-                <option value={3}>Unauthorized user</option>
+              <select
+                onChange={(event) => {
+                  setUser(event.target.value);
+                }}
+                defaultValue={user}
+                className="form-select"
+                aria-label="User select"
+              >
+                {USER_LIST.map((userEl, key) => (
+                  <option value={key} key={userEl}>
+                    {userEl}
+                  </option>
+                ))}
               </select>
             </Menu.Item>
           </div>
