@@ -20,6 +20,7 @@ const RecipeSchema = new mongoose.Schema({
     {
       name: { type: String, required: true, unique: true, sparse: true },
       amount: { type: String },
+      unit: { type: String },
     },
   ],
   rates: [Number],

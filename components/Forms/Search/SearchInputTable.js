@@ -21,15 +21,19 @@ const SearchInputTable = React.forwardRef(({ data, value: defaultValue, onChange
   };
 
   const handleOnChangeSearchInput = (val) => {
-    const newValue = val.map((el) => ({ ...el, amount: el.amount ? el.amount : '' }));
+    const newValue = val.map((el) => ({
+      ...el,
+      amount: el.amount ? el.amount : '',
+      unit: el.unit ? el.unit : '',
+    }));
     setValue(newValue);
     onChange(newValue);
   };
 
-  const handleOnChangeAmountInput = (event, element) => {
+  const handleOnChangeInput = (event, element, key) => {
     const amount = event.target.value;
     const modifiedElement = value.find(({ _id }) => _id === element._id);
-    modifiedElement.amount = amount;
+    modifiedElement[key] = amount;
     setValue([...value]);
     onChange([...value]);
   };
@@ -71,13 +75,14 @@ const SearchInputTable = React.forwardRef(({ data, value: defaultValue, onChange
       </div>
       <div className="col-md-6">
         <div className="row fw-bold">
-          <div className="col-3">Name</div>
-          <div className="col-9">Amount</div>
+          <div className="col-4">Name</div>
+          <div className="col-4">Amount</div>
+          <div className="col-4">Unit</div>
         </div>
         {value &&
           value.map((el) => (
             <div key={el._id} className="row my-1">
-              <div className="col-3 my-1">
+              <div className="col-4 my-1">
                 <Label key={el._id}>
                   {el.name}
                   <Icon
@@ -88,12 +93,20 @@ const SearchInputTable = React.forwardRef(({ data, value: defaultValue, onChange
                   />
                 </Label>
               </div>
-              <div className="col-9 my-1">
+              <div className="col-4 my-1">
                 <input
                   className="form-control"
                   type="text"
                   defaultValue={el.amount}
-                  onChange={(event) => handleOnChangeAmountInput(event, el)}
+                  onChange={(event) => handleOnChangeInput(event, el, 'amount')}
+                />
+              </div>
+              <div className="col-4 my-1">
+                <input
+                  className="form-control"
+                  type="text"
+                  defaultValue={el.unit}
+                  onChange={(event) => handleOnChangeInput(event, el, 'unit')}
                 />
               </div>
             </div>

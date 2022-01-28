@@ -94,10 +94,10 @@ function ReadRecipePage({
               <>
                 <h3>Ingredients</h3>
                 <ul className="list-group list-group-flush">
-                  {ingredients.map(({ _id: id, name, amount }) => (
+                  {ingredients.map(({ _id: id, name, amount, unit }) => (
                     <li key={id} className="list-group-item">
                       {name}
-                      {amount ? `: ${amount}` : ''}
+                      {amount ? `: ${amount} ${unit && amount ? unit : ''}` : ''}
                     </li>
                   ))}
                 </ul>
