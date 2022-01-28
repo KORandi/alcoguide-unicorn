@@ -37,3 +37,15 @@ export async function insert(fields) {
     throw new Error(`Cannot insert ingredient: ${error}`);
   }
 }
+
+/**
+ * @param {string} id
+ * @returns IngredientDao
+ */
+export async function deleteById(id) {
+  const deleted = await Ingredient.deleteOne({ _id: id });
+  if (!deleted) {
+    throw new Error('No ingredient found.');
+  }
+  return new IngredientDao(deleted);
+}

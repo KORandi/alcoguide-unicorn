@@ -5,11 +5,11 @@ import { Divider } from 'semantic-ui-react';
 import Link from 'next/link';
 import SearchForm from '../../Forms/Search';
 import HomepageHeadline from '../../Headlines/HomepageHeadline';
+import { HOMEPAGE_QUOTE } from '../../../utils/constants';
 
 function HomePage() {
   const [showForm, setShowForm] = useState(false);
-  const quote =
-    'Our goal is to help users set up the best alcoholic drinks from current available ingrediences';
+  const quote = HOMEPAGE_QUOTE;
 
   return (
     <div className="d-flex h-100 align-items-center justify-content-center">

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { Icon, Menu } from 'semantic-ui-react';
 import Sidebar from 'semantic-ui-react/dist/commonjs/modules/Sidebar/Sidebar';
+import { USER_LIST } from '../../utils/constants';
 
 function Navbar() {
   const [visible, setVisible] = useState(false);
@@ -36,11 +37,12 @@ function Navbar() {
             </li>
           </ul>
           <div className="d-flex align-items-center">
-            <select defaultValue={0} className="form-select" aria-label="Default select example">
-              <option value={0}>Admin</option>
-              <option value={1}>User one</option>
-              <option value={2}>User two</option>
-              <option value={3}>Unauthorized user</option>
+            <select defaultValue={0} className="form-select" aria-label="User select">
+              {USER_LIST.map((user, key) => (
+                <option value={key} key={user}>
+                  {user}
+                </option>
+              ))}
             </select>
           </div>
         </div>
