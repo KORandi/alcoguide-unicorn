@@ -131,12 +131,17 @@ function ReadRecipePage({
                   }}
                 />
                 <ul className="list-group list-group-flush">
-                  {ingredients.map(({ _id: id, name, amount, unit }) => (
-                    <li key={id} className="list-group-item">
-                      {name}
-                      {amount ? `: ${personCount * amount} ${unit && amount ? unit : ''}` : ''}
-                    </li>
-                  ))}
+                  {ingredients.map(({ _id: id, name, amount, unit }) => {
+                    const calculatedAmount = Number.isNaN(personCount * amount)
+                      ? ''
+                      : personCount * amount;
+                    return (
+                      <li key={id} className="list-group-item">
+                        {name}
+                        {amount ? `: ${calculatedAmount} ${unit && amount ? unit : ''}` : ''}
+                      </li>
+                    );
+                  })}
                 </ul>
               </>
             )}
