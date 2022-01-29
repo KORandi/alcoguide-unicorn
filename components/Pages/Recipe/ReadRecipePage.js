@@ -1,9 +1,11 @@
 /* eslint-disable react/no-danger */
 import propTypes from 'prop-types';
+import { useState } from 'react';
 import { Rating } from 'semantic-ui-react';
 import { useAppContext } from '../../../utils/context/state';
 import ingredientPropType from '../../../utils/propTypes/ingredientPropType';
 import { useRecipeActions } from '../../../utils/utils';
+import IngredientUnitForm from '../../Forms/IngredientUnitForm';
 
 function ReadRecipePage({
   recipe: {
@@ -20,6 +22,7 @@ function ReadRecipePage({
 }) {
   const { removeRecipe, calcAvgRating, updateRating, router } = useRecipeActions();
   const { user } = useAppContext();
+  const [personCount, setPersonCount] = useState(1);
 
   return (
     <>
@@ -121,11 +124,17 @@ function ReadRecipePage({
             {ingredients && (
               <>
                 <h3>Ingredients</h3>
+                <IngredientUnitForm
+                  defaultValue={personCount}
+                  onChange={(event) => {
+                    setPersonCount(parseInt(event.target.value, 10));
+                  }}
+                />
                 <ul className="list-group list-group-flush">
                   {ingredients.map(({ _id: id, name, amount, unit }) => (
                     <li key={id} className="list-group-item">
                       {name}
-                      {amount ? `: ${amount} ${unit && amount ? unit : ''}` : ''}
+                      {amount ? `: ${personCount * amount} ${unit && amount ? unit : ''}` : ''}
                     </li>
                   ))}
                 </ul>
