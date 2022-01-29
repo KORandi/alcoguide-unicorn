@@ -21,9 +21,11 @@ export async function getRecipe(id) {
 }
 
 export async function deleteRecipe(id) {
-  return fetch(`${host}/api/recipe/${id}`, {
+  const res = fetch(`${host}/api/recipe/${id}`, {
     method: 'DELETE',
   });
+  const { data } = await res.json();
+  return data;
 }
 
 export async function addRecipe(recipe) {
@@ -35,7 +37,8 @@ export async function addRecipe(recipe) {
     },
     body: JSON.stringify(recipe),
   });
-  return res;
+  const { data } = await res.json();
+  return data;
 }
 
 export async function addRecipeFormData(recipe) {
@@ -43,7 +46,8 @@ export async function addRecipeFormData(recipe) {
     method: 'POST',
     body: recipe,
   });
-  return res;
+  const { data } = await res.json();
+  return data;
 }
 
 export async function editRecipeFormData(id, recipe) {
@@ -51,14 +55,16 @@ export async function editRecipeFormData(id, recipe) {
     method: 'PUT',
     body: recipe,
   });
-  return res;
+  const { data } = await res.json();
+  return data;
 }
 
 export async function removeImage(id) {
   const res = await fetch(`${host}/api/recipe/image/${id}`, {
     method: 'DELETE',
   });
-  return res;
+  const { data } = await res.json();
+  return data;
 }
 
 export async function rateRecipe(id, value) {
@@ -70,5 +76,6 @@ export async function rateRecipe(id, value) {
     },
     body: JSON.stringify({ value }),
   });
-  return res;
+  const { data } = await res.json();
+  return data;
 }
