@@ -99,7 +99,7 @@ export const useRecipeActions = () => {
     try {
       await deleteRecipe(id);
     } catch (error) {
-      Swal.fire('Oops...', error, 'error');
+      Swal.fire('Oops...', error.message, 'error');
       return;
     }
     await Swal.fire('Deleted!', 'Your file has been deleted.', 'success');

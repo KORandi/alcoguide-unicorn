@@ -31,7 +31,7 @@ export async function getByIdAndUpdate(id, fields) {
  * @returns RecipeDao
  */
 export async function deleteById(id) {
-  const deletedRecipe = await Recipe.deleteOne({ _id: id });
+  const deletedRecipe = await Recipe.findByIdAndRemove(id);
   if (!deletedRecipe) {
     throw new Error('No recipe found.');
   }

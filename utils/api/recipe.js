@@ -21,7 +21,7 @@ export async function getRecipe(id) {
 }
 
 export async function deleteRecipe(id) {
-  const res = fetch(`${host}/api/recipe/${id}`, {
+  const res = await fetch(`${host}/api/recipe/${id}`, {
     method: 'DELETE',
   });
   const { data } = await res.json();
