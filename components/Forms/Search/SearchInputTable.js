@@ -96,7 +96,8 @@ const SearchInputTable = React.forwardRef(({ data, value: defaultValue, onChange
               <div className="col-4 my-1">
                 <input
                   className="form-control"
-                  type="text"
+                  type="number"
+                  min="0"
                   defaultValue={el.amount}
                   onChange={(event) => handleOnChangeInput(event, el, 'amount')}
                 />
