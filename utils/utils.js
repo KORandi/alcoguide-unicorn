@@ -102,7 +102,7 @@ export const useRecipeActions = () => {
       Swal.fire('Oops...', error.message, 'error');
       return;
     }
-    await Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+    await Swal.fire('Deleted!', 'Your recipe has been deleted.', 'success');
     await fetchRecipes();
     router.push('/search');
   };
